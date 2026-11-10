@@ -32,6 +32,11 @@ build/
 ### VS Code ###
 .vscode/
 
-data/
+### Projet ###
+/data/
 *.log
 .DS_Store
+
+### H2 (fichiers temporaires, la base finale db/*.mv.db reste versionnée) ###
+*.lock.db
+*.trace.db
