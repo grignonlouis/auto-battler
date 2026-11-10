@@ -1,0 +1,87 @@
+:root {
+    --rpg-bg: #14110f;
+    --rpg-surface: #1f1a16;
+    --rpg-border: #5b4a2e;
+    --rpg-gold: #c9a24d;
+    --rpg-gold-bright: #e6c476;
+    --rpg-text: #d9cfbd;
+    --rpg-muted: #8f8573;
+    --rpg-blood: #8b2e2e;
+}
+
+body {
+    background-color: var(--rpg-bg);
+    background-image: radial-gradient(ellipse at top, #2a221b 0%, var(--rpg-bg) 70%);
+    background-attachment: fixed;
+    color: var(--rpg-text);
+    font-family: "Crimson Text", Georgia, serif;
+    font-size: 1.15rem;
+}
+
+.rpg-title,
+h1, h2, h3, h4, h5 {
+    font-family: "Cinzel", Georgia, serif;
+    color: var(--rpg-gold);
+    letter-spacing: 0.06em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.rpg-navbar {
+    background: linear-gradient(#1b1612, #120f0c);
+    border-bottom: 2px solid var(--rpg-border);
+}
+.rpg-navbar .nav-link {
+    font-family: "Cinzel", serif;
+    color: var(--rpg-text);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+}
+.rpg-navbar .nav-link:hover { color: var(--rpg-gold-bright); }
+
+.rpg-main { padding-top: 4rem; padding-bottom: 4rem; }
+
+.rpg-eyebrow {
+    font-style: italic;
+    color: var(--rpg-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.rpg-divider {
+    color: var(--rpg-gold);
+    margin: 1rem auto 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 320px;
+}
+.rpg-divider::before,
+.rpg-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rpg-gold), transparent);
+}
+
+/* Boutons */
+.btn-rpg {
+    font-family: "Cinzel", serif;
+    color: var(--rpg-bg);
+    background: linear-gradient(#e6c476, #b78f3c);
+    border: 1px solid var(--rpg-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+.btn-rpg:hover {
+    color: var(--rpg-bg);
+    background: linear-gradient(#f0d28a, #c9a24d);
+}
+
+/* Cartes (héros, monstres, etc.) : à utiliser avec class="card rpg-card" */
+.rpg-card {
+    background-color: var(--rpg-surface);
+    border: 1px solid var(--rpg-border);
+    border-radius: 4px;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.5);
+}

@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Auto Battler</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr" data-bs-theme="dark">
+<head th:replace="~{fragments/layout :: head('Accueil')}"></head>
 <body>
-    <h1>Bienvenue dans Auto Battler !</h1>
-    <p>Ton application Spring Boot fonctionne.</p>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container rpg-main">
+    <section class="rpg-hero text-center">
+        <p class="rpg-eyebrow">Bienvenue, seigneur de guerre</p>
+        <h1 class="rpg-title display-4">Auto-Battler</h1>
+        <div class="rpg-divider"><i class="bi bi-diamond-fill"></i></div>
+        <p class="lead">Recrutez des héros, forgez votre équipe et envoyez-la affronter les donjons.</p>
+        <a href="#" class="btn btn-rpg btn-lg mt-3">Entrer dans la guilde</a>
+    </section>
+</main>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 </body>
 </html>
