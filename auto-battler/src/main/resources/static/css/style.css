@@ -1,87 +1,32 @@
-:root {
-    --rpg-bg: #14110f;
-    --rpg-surface: #1f1a16;
-    --rpg-border: #5b4a2e;
-    --rpg-gold: #c9a24d;
-    --rpg-gold-bright: #e6c476;
-    --rpg-text: #d9cfbd;
-    --rpg-muted: #8f8573;
-    --rpg-blood: #8b2e2e;
+[data-bs-theme="dark"] {
+    --bs-body-bg: #1c1917;
+    --bs-body-bg-rgb: 28, 25, 23;
+    --bs-tertiary-bg: #292524;
+    --bs-tertiary-bg-rgb: 41, 37, 36;
+    --bs-body-color: #d6d3d1;
+    --bs-border-color: #44403c;
+    --bs-link-color: #c9a66b;
+    --bs-link-hover-color: #dfc08a;
+    --bs-border-radius: 0.25rem;
 }
 
-body {
-    background-color: var(--rpg-bg);
-    background-image: radial-gradient(ellipse at top, #2a221b 0%, var(--rpg-bg) 70%);
-    background-attachment: fixed;
-    color: var(--rpg-text);
-    font-family: "Crimson Text", Georgia, serif;
-    font-size: 1.15rem;
+h1, h2, h3, h4, h5, h6,
+.navbar-brand {
+    font-family: "IM Fell English", Georgia, serif;
+    font-weight: 400;
 }
 
-.rpg-title,
-h1, h2, h3, h4, h5 {
-    font-family: "Cinzel", Georgia, serif;
-    color: var(--rpg-gold);
-    letter-spacing: 0.06em;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #8a6d3b;
+    --bs-btn-border-color: #8a6d3b;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #9e7e45;
+    --bs-btn-hover-border-color: #9e7e45;
+    --bs-btn-active-bg: #75592f;
+    --bs-btn-active-border-color: #75592f;
 }
 
-.rpg-navbar {
-    background: linear-gradient(#1b1612, #120f0c);
-    border-bottom: 2px solid var(--rpg-border);
-}
-.rpg-navbar .nav-link {
-    font-family: "Cinzel", serif;
-    color: var(--rpg-text);
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-}
-.rpg-navbar .nav-link:hover { color: var(--rpg-gold-bright); }
-
-.rpg-main { padding-top: 4rem; padding-bottom: 4rem; }
-
-.rpg-eyebrow {
-    font-style: italic;
-    color: var(--rpg-muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-}
-
-.rpg-divider {
-    color: var(--rpg-gold);
-    margin: 1rem auto 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    max-width: 320px;
-}
-.rpg-divider::before,
-.rpg-divider::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--rpg-gold), transparent);
-}
-
-/* Boutons */
-.btn-rpg {
-    font-family: "Cinzel", serif;
-    color: var(--rpg-bg);
-    background: linear-gradient(#e6c476, #b78f3c);
-    border: 1px solid var(--rpg-gold);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-}
-.btn-rpg:hover {
-    color: var(--rpg-bg);
-    background: linear-gradient(#f0d28a, #c9a24d);
-}
-
-/* Cartes (héros, monstres, etc.) : à utiliser avec class="card rpg-card" */
-.rpg-card {
-    background-color: var(--rpg-surface);
-    border: 1px solid var(--rpg-border);
-    border-radius: 4px;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.5);
+.progress-bar {
+    background-color: #9b2c2c;
 }

@@ -5,14 +5,12 @@
 
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
-<main class="container rpg-main">
-    <section class="rpg-hero text-center">
-        <p class="rpg-eyebrow">Bienvenue, seigneur de guerre</p>
-        <h1 class="rpg-title display-4">Auto-Battler</h1>
-        <div class="rpg-divider"><i class="bi bi-diamond-fill"></i></div>
-        <p class="lead">Recrutez des héros, forgez votre équipe et envoyez-la affronter les donjons.</p>
-        <a href="#" class="btn btn-rpg btn-lg mt-3">Entrer dans la guilde</a>
-    </section>
+<main class="container py-5">
+    <h1>Auto-Battler</h1>
+    <p class="lead text-body-secondary">
+        Recrutez des héros, composez votre équipe et envoyez-la affronter les donjons.
+    </p>
+    <a href="#" class="btn btn-primary">Gérer la guilde</a>
 </main>
 
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
