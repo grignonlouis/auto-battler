@@ -1,6 +1,26 @@
-# Auto-Battler
+<h1 align="center">Auto-Battler</h1>
 
-Application web de gestion d'une guilde de héros, réalisée dans le cadre du projet JEE (CY Tech, 2026).
+<p align="center">
+  Application web de gestion d'une guilde de héros, avec combats automatiques simulés côté serveur.<br>
+  Projet JEE · CY Tech · 2026
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21">
+  <img src="https://img.shields.io/badge/Spring%20Boot-4.1.2-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot">
+  <img src="https://img.shields.io/badge/Spring%20Data-JPA-6DB33F?style=for-the-badge&logo=spring&logoColor=white" alt="Spring Data JPA">
+  <img src="https://img.shields.io/badge/Thymeleaf-Templates-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white" alt="Thymeleaf">
+  <img src="https://img.shields.io/badge/H2-Database-1021FF?style=for-the-badge" alt="H2 Database">
+  <img src="https://img.shields.io/badge/Bootstrap-5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap 5">
+  <img src="https://img.shields.io/badge/Maven-Build-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" alt="Maven">
+  <img src="https://img.shields.io/badge/JUnit-5-25A162?style=for-the-badge&logo=junit5&logoColor=white" alt="JUnit 5">
+  <img src="https://img.shields.io/badge/API-REST-009688?style=for-the-badge" alt="API REST">
+  <img src="https://img.shields.io/badge/Bruno-API%20Tests-F4AA41?style=for-the-badge" alt="Bruno">
+  <img src="https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge" alt="Status">
+</p>
+
+## Description
+
 Le joueur recrute des héros, compose une équipe de 4 héros maximum, les équipe, puis lance des combats
 automatiques contre des monstres. Les combats sont simulés côté serveur, en Java, et affichés sous forme de journal.
 
