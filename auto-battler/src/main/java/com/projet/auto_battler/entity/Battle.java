@@ -1,5 +1,7 @@
 package main.java.com.projet.auto_battler.entity;
 
+import java.util.Date;
+
 import lombok.Data;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,9 +17,9 @@ public class Battle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Column
-    date stratedAt;
+    Date startedAt;
     @Column
-    date endedAt;
+    Date endedAt;
     @Column
     Status status;
     @Column
