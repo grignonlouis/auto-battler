@@ -12,6 +12,23 @@
 
 package com.projet.auto_battler.entity;
 
+import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+@Data
+@Entity
 public class Skill {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String name;
+    String description;
+    SkillType skillType;
+    int power;
+    int cooldown;
+    int duration;
 }

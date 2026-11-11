@@ -6,6 +6,12 @@
 
 package com.projet.auto_battler.repository;
 
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.projet.auto_battler.entity.Skill;
+
 public interface SkillRepository extends JpaRepository<Skill, Long> {
     boolean existsByNameIgnoreCase(String name);
     boolean existsByNameIgnoreCaseAndIdNot(String name, Long id);
