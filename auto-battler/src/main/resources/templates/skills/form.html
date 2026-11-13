@@ -1,0 +1,6 @@
+<!-- Un seul formulaire pour création et modification, grâce à "formAction" et "pageTitle".
+     - th:object="${skillRequest}", th:action="@{${formAction}}", method POST.
+     - Champs avec th:field : name, description (textarea), skillType (select alimenté par "skillTypes"), power, cooldown, duration.
+     - Sous chaque champ : message d'erreur (th:errors) avec la classe Bootstrap is-invalid / invalid-feedback.
+     - Boutons : Enregistrer, Annuler (retour /skills).
+     - Pas de CSRF à gérer (pas de Spring Security). -->
