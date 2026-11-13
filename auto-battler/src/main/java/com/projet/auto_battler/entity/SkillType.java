@@ -1,7 +1,11 @@
-// enum : ATTACK, HEAL, SHIELD, POISON
-
 package com.projet.auto_battler.entity;
 
+/**
+ * Les types de compétences possibles.
+ */
 public enum SkillType {
-    ATTACK, HEAL, SHIELD, POISON
+    ATTACK, // inflige des dégâts
+    HEAL,   // rend des points de vie
+    SHIELD, // protège pendant quelques tours
+    POISON  // inflige des dégâts à chaque tour
 }

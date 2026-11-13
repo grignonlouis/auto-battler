@@ -1,47 +1,55 @@
-// @Entity. Lombok : @Getter, @Setter, @NoArgsConstructor. INTERDIT : @Data.
-// Champs :
-//  - id : Long, @Id + @GeneratedValue(strategy = IDENTITY)
-//  - name : String, obligatoire, unique en base (@Column(nullable = false, unique = true, length = 100))
-//  - description : String, optionnel, longueur max 500
-//  - skillType : SkillType, @Enumerated(EnumType.STRING), obligatoire
-//  - power : int (dégâts, soin ou valeur du bouclier/poison)
-//  - cooldown : int (tours d'attente entre deux utilisations)
-//  - duration : int (tours, utile pour POISON et SHIELD, 0 sinon)
-// Attention aux mots réservés H2 : ne pas nommer une colonne value, user, order, key...
-// Aucune relation ici : la relation Hero <-> Skill est portée par Hero (côté propriétaire).
-
 package com.projet.auto_battler.entity;
 
-import lombok.Data;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+/**
+ * Une compétence qu'un héros peut utiliser en combat (attaque, soin, bouclier, poison).
+ * @Entity veut dire que cette classe correspond à une table de la base de données :
+ * un objet Skill = une ligne de la table.
+ * On utilise @Getter/@Setter de Lombok et surtout PAS @Data, qui cause des problèmes
+ * avec les relations JPA (boucles infinies).
+ * Cette classe n'a aucune relation : c'est Hero qui portera le lien Hero-Skill.
+ */
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor // JPA a besoin d'un constructeur vide pour créer les objets
 public class Skill {
 
+    // Identifiant unique, généré automatiquement par la base
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    @Column
-    String name;
+    // Nom de la compétence : obligatoire et unique dans toute la base
+    @Column(nullable = false, unique = true, length = 100)
+    private String name;
 
-    @Column
-    String description;
+    // Description (jusqu'à 500 caractères)
+    @Column(length = 500)
+    private String description;
 
-    @Column
-    SkillType skillType;
+    // Type de compétence. EnumType.STRING : on stocke le texte ("HEAL") et pas un numéro,
+    // comme ça l'ordre de l'enum peut changer sans casser la base.
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SkillType skillType;
 
-    @Column
-    int power;
+    // Dégâts, soin, ou valeur du bouclier/poison selon le type
+    private int power;
 
-    @Column
-    int cooldown;
+    // Nombre de tours à attendre avant de pouvoir réutiliser la compétence
+    private int cooldown;
 
-    @Column
-    int duration;
+    // Nombre de tours que dure l'effet (poison et bouclier), 0 pour les autres
+    private int duration;
 }
