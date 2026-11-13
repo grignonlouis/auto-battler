@@ -3,7 +3,7 @@ package com.projet.auto_battler.entity;
 import lombok.Data;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +24,6 @@ public class Dungeon {
     @Column
     private boolean unlocked;
 
-    @OneToMany 
+    @ManyToMany 
     private java.util.List<Monster> monsters;
 }
