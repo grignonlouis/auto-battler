@@ -1,18 +1,18 @@
 package com.projet.auto_battler.exception;
 
 /**
- * Exception lancée quand on cherche quelque chose qui n'existe pas
- * (par exemple une compétence avec un id inconnu).
- * C'est une RuntimeException : on n'est pas obligé de la déclarer partout avec "throws".
- * Côté web elle donne une page 404, côté API REST un code HTTP 404.
+ * Thrown when a requested resource does not exist (for example a skill with an unknown id).
+ * Mapped to HTTP 404 by the exception handlers.
  */
 public class ResourceNotFoundException extends RuntimeException {
 
     /**
-     * Construit le message à partir du nom de la ressource et de son id.
-     * Exemple : new ResourceNotFoundException("Compétence", 12) donne "Compétence 12 introuvable".
+     * Creates the exception with a message built from the resource name and its id.
+     *
+     * @param resource the type of resource that was not found (for example "Skill")
+     * @param id       the id that was looked up
      */
     public ResourceNotFoundException(String resource, Long id) {
-        super(resource + " " + id + " introuvable");
+        super(resource + " " + id + " not found");
     }
 }

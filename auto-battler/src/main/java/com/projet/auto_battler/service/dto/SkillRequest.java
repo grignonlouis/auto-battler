@@ -1,16 +1,41 @@
-// CLASSE (pas un record : th:field a besoin de getters/setters). Lombok : @Getter @Setter @NoArgsConstructor.
-// Sert à la fois pour le formulaire Thymeleaf et pour le corps JSON des POST/PUT.
-// Champs et validations (jakarta.validation.constraints) :
-//  - name : @NotBlank, @Size(max = 100)
-//  - description : @Size(max = 500)
-//  - skillType : @NotNull
-//  - power : @Min(0)
-//  - cooldown : @Min(0)
-//  - duration : @Min(0)
-// Valeurs par défaut raisonnables pour les int (0) pour que le formulaire "nouveau" s'affiche proprement.
-
 package com.projet.auto_battler.service.dto;
 
+import com.projet.auto_battler.entity.SkillType;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+/**
+ * Input data used to create or update a skill.
+ * It backs both the Thymeleaf form and the JSON body of the REST API.
+ * It is a regular class with getters and setters so that th:field can bind to it.
+ */
+@Getter
+@Setter
+@NoArgsConstructor
 public class SkillRequest {
-    
+
+    @NotBlank(message = "Name is required")
+    @Size(max = 100, message = "Name must not exceed 100 characters")
+    private String name;
+
+    @Size(max = 500, message = "Description must not exceed 500 characters")
+    private String description;
+
+    @NotNull(message = "Type is required")
+    private SkillType skillType;
+
+    @Min(value = 0, message = "Power must not be negative")
+    private int power;
+
+    @Min(value = 0, message = "Cooldown must not be negative")
+    private int cooldown;
+
+    @Min(value = 0, message = "Duration must not be negative")
+    private int duration;
 }

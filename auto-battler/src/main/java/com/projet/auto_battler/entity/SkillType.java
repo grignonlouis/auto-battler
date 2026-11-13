@@ -1,11 +1,11 @@
 package com.projet.auto_battler.entity;
 
 /**
- * Les types de compétences possibles.
+ * The kinds of skills a hero can use in combat.
  */
 public enum SkillType {
-    ATTACK, // inflige des dégâts
-    HEAL,   // rend des points de vie
-    SHIELD, // protège pendant quelques tours
-    POISON  // inflige des dégâts à chaque tour
+    ATTACK,
+    HEAL,
+    SHIELD,
+    POISON
 }
