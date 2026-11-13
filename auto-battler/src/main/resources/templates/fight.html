@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr" data-bs-theme="dark">
+<head th:replace="~{fragments/layout :: head('Combat')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container py-5">
+    <h1>Combat</h1>
+    <p class="lead text-body-secondary">
+        La bagarre.
+    </p>
+    <a href="bilan" class="btn btn-primary">Page Bilan</a>
+</main>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

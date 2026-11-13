@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr" data-bs-theme="dark">
-<head th:replace="~{fragments/layout :: head('Accueil')}"></head>
+<head th:replace="~{fragments/layout :: head('Bilan')}"></head>
 <body>
 
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
 <main class="container py-5">
-    <h1>Auto-Battler</h1>
+    <h1>Bilan</h1>
     <p class="lead text-body-secondary">
-        Recrutez des héros, composez votre équipe et envoyez-la affronter les donjons.
+        Vous avez gagné 0 pieces. (noob)
     </p>
-    <a href="#" class="btn btn-primary">Gérer la guilde</a>
+    <a href="donjon" class="btn btn-primary">Retourner à la selection de donjon</a>
 </main>
 
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>

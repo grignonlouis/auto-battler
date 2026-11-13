@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr" data-bs-theme="dark">
+<head th:replace="~{fragments/layout :: head('Equipe')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container py-5">
+    <h1>Construction d'une équipe</h1>
+    <p class="lead text-body-secondary">
+        Recrutez des héros, composez votre équipe et envoyez-la affronter les donjons.
+    </p>    
+</main>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
