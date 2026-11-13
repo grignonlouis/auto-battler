@@ -19,7 +19,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "dungeonSelect";
+        return "redirect:/donjon";
     }
 
     @GetMapping("/equipe")
