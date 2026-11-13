@@ -97,12 +97,8 @@ puis sélectionner l'environnement `local`.
 
 ## Équipe
 
-| Membre        | Parties réalisées |
-|---------------|-------------------|
-| Louis ESCALLE | …                 |
-| Léo VAYRAC    | …                 |
-| Louis GRIGNON | …                 |
-
-## Crédits
-
-- A COMPLETER
+| Membre        | 
+|---------------|
+| Louis ESCALLE | 
+| Léo VAYRAC    |
+| Louis GRIGNON |
