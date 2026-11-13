@@ -15,22 +15,22 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+
     private String username;
-    @Column
+
     private String email;
-    @Column
-    private String password;
+
+    private String passwordHash;
     @OneToOne
     private PlayerProfile profile;
-    @Column 
+
     private boolean isAdmin;
 
 
     public Player(String name, String email, String password) {
         this.username = name;
         this.email = email;
-        this.password = password;
+        this.passwordHash = password;
         this.isAdmin = false;
     }
 }
