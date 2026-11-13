@@ -1,7 +1,6 @@
 # Diagrammes du projet
 
 Référence de l'équipe pour le modèle de données et l'architecture du moteur de combat.
-Toute modification se discute en équipe et se fait dans la même PR que le changement de code.
 
 ## 1. MCD (modèle entité-association)
 
