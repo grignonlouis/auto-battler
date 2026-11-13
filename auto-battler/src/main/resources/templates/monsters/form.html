@@ -56,13 +56,6 @@
                        th:classappend="${#fields.hasErrors('defense')} ? 'is-invalid'">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('defense')}" th:errors="*{defense}"></div>
             </div>
-
-            <div class="col-md-3 mb-3">
-                <label for="speed" class="form-label">Speed</label>
-                <input type="number" min="0" class="form-control" th:field="*{speed}"
-                       th:classappend="${#fields.hasErrors('speed')} ? 'is-invalid'">
-                <div class="invalid-feedback" th:if="${#fields.hasErrors('speed')}" th:errors="*{speed}"></div>
-            </div>
         </div>
 
         <div class="form-check mb-4">

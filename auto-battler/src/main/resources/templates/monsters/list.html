@@ -32,7 +32,6 @@
             <th>Health</th>
             <th>Damage</th>
             <th>Defense</th>
-            <th>Speed</th>
             <th>Boss</th>
             <th class="text-end">Actions</th>
         </tr>
@@ -45,7 +44,6 @@
             <td th:text="${monster.health}">0</td>
             <td th:text="${monster.damage}">0</td>
             <td th:text="${monster.defense}">0</td>
-            <td th:text="${monster.speed}">0</td>
             <td>
                 <span class="badge text-bg-danger" th:if="${monster.boss}">Boss</span>
             </td>
