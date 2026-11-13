@@ -78,8 +78,6 @@ public class SkillService {
         request.setDescription(skill.getDescription());
         request.setSkillType(skill.getSkillType());
         request.setPower(skill.getPower());
-        request.setCooldown(skill.getCooldown());
-        request.setDuration(skill.getDuration());
         return request;
     }
 
@@ -160,7 +158,5 @@ public class SkillService {
         skill.setDescription(request.getDescription());
         skill.setSkillType(request.getSkillType());
         skill.setPower(request.getPower());
-        skill.setCooldown(request.getCooldown());
-        skill.setDuration(request.getDuration());
     }
 }

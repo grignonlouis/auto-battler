@@ -37,8 +37,4 @@ public class Skill {
     private SkillType skillType;
 
     private int power;
-
-    private int cooldown;
-
-    private int duration;
 }

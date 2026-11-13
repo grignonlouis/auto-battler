@@ -32,10 +32,4 @@ public class SkillRequest {
 
     @Min(value = 0, message = "Power must not be negative")
     private int power;
-
-    @Min(value = 0, message = "Cooldown must not be negative")
-    private int cooldown;
-
-    @Min(value = 0, message = "Duration must not be negative")
-    private int duration;
 }

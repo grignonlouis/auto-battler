@@ -1,1 +1,18 @@
-<!-- Utilise les fragments head / navbar / scripts. Message "Page introuvable" (+ message de l'exception) et lien retour accueil. -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head th:replace="~{fragments/layout :: head('Page not found')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container py-5">
+    <h1>Page not found</h1>
+    <p class="lead text-body-secondary" th:text="${message}">
+        The requested page does not exist.
+    </p>
+    <a class="btn btn-primary" th:href="@{/}">Back to home</a>
+</main>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

@@ -1,7 +1,63 @@
-<!-- Fragments head('Compétences'), navbar, scripts ; <html data-bs-theme="dark">.
-     - Message flash de succès (alerte Bootstrap) s'il existe.
-     - Formulaire de recherche (GET /skills, champ "search", pré-rempli) + bouton "Nouvelle compétence" vers /skills/new.
-     - Tableau Bootstrap : nom, type, puissance, cooldown, durée, actions.
-     - Actions : lien "Modifier", et petit formulaire POST vers /skills/{id}/delete avec confirmation JS (onsubmit confirm).
-     - Message "Aucune compétence" si la liste est vide.
-     - Boucle th:each sur "skills". -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head th:replace="~{fragments/layout :: head('Skills')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="mb-0">Skills</h1>
+        <a class="btn btn-primary" th:href="@{/skills/new}">New skill</a>
+    </div>
+
+    <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+
+    <form class="row g-2 mb-4" method="get" th:action="@{/skills}">
+        <div class="col">
+            <input type="text" class="form-control" name="search"
+                   placeholder="Search by name" th:value="${search}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </div>
+    </form>
+
+    <table class="table table-hover align-middle">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Power</th>
+            <th class="text-end">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="skill : ${skills}">
+            <td th:text="${skill.name}">Name</td>
+            <td th:text="${skill.skillType}">Type</td>
+            <td th:text="${skill.power}">0</td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary"
+                   th:href="@{/skills/{id}/edit(id=${skill.id})}">Edit</a>
+                <form class="d-inline" method="post"
+                      th:action="@{/skills/{id}/delete(id=${skill.id})}"
+                      onsubmit="return confirm('Delete this skill?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(skills)}">
+            <td colspan="6" class="text-center text-body-secondary">No skills found.</td>
+        </tr>
+
+        </tbody>
+    </table>
+</main>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

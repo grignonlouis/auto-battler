@@ -12,17 +12,13 @@ import com.projet.auto_battler.entity.SkillType;
  * @param description the optional description
  * @param skillType   the kind of skill
  * @param power       damage, healing or shield/poison value
- * @param cooldown    number of turns to wait before reuse
- * @param duration    number of turns the effect lasts
  */
 public record SkillResponse(
         Long id,
         String name,
         String description,
         SkillType skillType,
-        int power,
-        int cooldown,
-        int duration) {
+        int power) {  
 
     /**
      * Converts a Skill entity into a SkillResponse by copying its fields.
@@ -36,8 +32,7 @@ public record SkillResponse(
                 skill.getName(),
                 skill.getDescription(),
                 skill.getSkillType(),
-                skill.getPower(),
-                skill.getCooldown(),
-                skill.getDuration());
+                skill.getPower()
+        );
     }
 }

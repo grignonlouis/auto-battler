@@ -53,8 +53,6 @@ erDiagram
         string description
         string skill_type "enum"
         int power
-        int cooldown
-        int duration
     }
     EQUIPMENT {
         long id PK
@@ -164,8 +162,6 @@ classDiagram
         -String description
         -SkillType skillType
         -int power
-        -int cooldown
-        -int duration
     }
     class Equipment {
         -Long id
@@ -334,9 +330,6 @@ classDiagram
     class SkillSnapshot {
         -SkillType type
         -int power
-        -int cooldown
-        -int duration
-        -int cooldownRemaining
     }
     class ActiveEffect {
         -EffectType type
