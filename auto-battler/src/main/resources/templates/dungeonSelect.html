@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr" data-bs-theme="dark">
-<head th:replace="~{fragments/layout :: head('Donjon')}"></head>
+<head th:replace="~{fragments/layout :: head('Donjons')}"></head>
 <body>
 
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
-<main class="container py-5">
-    <h1>Liste des donjons</h1>
-    <p class="lead text-body-secondary">
-        Selectionnez un donjon à explorer.
-    </p>
-    <a th:href="@{/combat}" class="btn btn-primary">Placeholder Donjon</a>
-    <ul>
-        <li th:each="dungeon : ${dungeons}">
-            <span th:text="${dungeon.id}">1</span> -
-            <span th:text="${dungeon.name}">Nom de l'élément</span>
-        </li>
-    </ul>
-</main>
+<main class="container py-4">
 
-<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
-</body>
-</html>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="mb-0">Donjons</h1>
+    </div>
+
+    <table class="table table-hover align-middle">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Difficulté</th>
+            <th>Monstres</th>
+            <th class="text-end">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="dungeon : ${dungeons}">
+            <td th:text="${dungeon.name}">Nom</td>
+            <td th:text="${dungeon.description}">Description</td>
+            <td th:text="${dungeon.difficulty}">1</td>
+            <td th:text="${dungeon.monsters != null ? dungeon.monsters.size() : 0}">0</td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-primary"
+                   th:if="${dungeon.unlocked}"
+                   th:href="@{/combat(dungeonId=${dungeon.id})}">Combattre</a>
+                <button class="btn btn-sm btn-outline-secondary" disabled
+                        th:unless="${dungeon.unlocked}">Verrouillé</button>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(dungeons)}">
+            <td colspan="5" class="text-center text-body-secondary">Aucun donjon trouvé.</td>

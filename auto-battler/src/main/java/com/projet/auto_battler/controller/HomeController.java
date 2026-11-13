@@ -6,14 +6,20 @@ import org.springframework.ui.Model;
 import java.util.List;
 
 import com.projet.auto_battler.entity.Dungeon;
-
+import com.projet.auto_battler.repository.*;
 
 @Controller
 public class HomeController {
 
+    private final DungeonRepository dungeonRepository;
+    
+    public HomeController(DungeonRepository dungeonRepository) {
+        this.dungeonRepository = dungeonRepository;
+    }
+
     @GetMapping("/")
     public String home() {
-        return "dongeonSelect";
+        return "dungeonSelect";
     }
 
     @GetMapping("/equipe")
@@ -23,12 +29,7 @@ public class HomeController {
 
     @GetMapping("/donjon")
     public String donjon(Model model) {
-         List<Dungeon> dungeons = List.of(
-                    new Dungeon("Premier élément", "desc1", 1, true),
-                    new Dungeon("Deuxième élément", "desc2", 3, true),
-                    new Dungeon("Troisième élément", "desc3", 2, false)
-                );
-                model.addAttribute("dungeons", dungeons);
+        model.addAttribute("dungeons", dungeonRepository.findAll());
         return "dungeonSelect";
     }
 
