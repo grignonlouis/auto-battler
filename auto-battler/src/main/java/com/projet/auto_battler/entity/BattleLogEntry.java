@@ -14,13 +14,13 @@ public class BattleLogEntry {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column
-    int turn;
+    private int turn;
     @Column
-    String actorName;
+    private String actorName;
     @Column
-    int entryType;
+    private int entryType;
     @Column
-    String message;
+    private String message;
 }

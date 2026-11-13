@@ -1,10 +1,9 @@
 package com.projet.auto_battler.entity;
 
-import java.util.Date;
-
 import lombok.Data;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,12 +14,23 @@ public class Player {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column
-    String username;
+    private String username;
     @Column
-    String email;
+    private String email;
     @Column
-    Date createdAt;
+    private String password;
+    @OneToOne
+    private PlayerProfile profile;
+    @Column 
+    private boolean isAdmin;
 
+
+    public Player(String name, String email, String password) {
+        this.username = name;
+        this.email = email;
+        this.password = password;
+        this.isAdmin = false;
+    }
 }

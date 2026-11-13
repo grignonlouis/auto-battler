@@ -13,22 +13,22 @@ public class Equipment {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column
-    String name;
+    private String name;
     @Column
-    String description;
+    private String description;
     @Column
-    Slot slot;
+    private Slot slot;
     @Column
-    int rarity;
+    private int rarity;
     @Column
-    int bonusAttack;
+    private int bonusAttack;
     @Column
-    int bonusHealth;
+    private int bonusHealth;
     @Column
-    int bonusDefense;
+    private int bonusDefense;
     @Column
-    int bonusSpeed;
+    private int bonusSpeed;
 
 }

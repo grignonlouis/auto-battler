@@ -15,19 +15,19 @@ public class Battle {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column
-    Date startedAt;
+    private Date startedAt;
     @Column
-    Date endedAt;
+    private Date endedAt;
     @Column
-    Status status;
+    private Status status;
     @Column
-    int seed;
+    private int seed;
     @Column
-    int turnsPlayed;
+    private int turnsPlayed;
     @Column
-    int xpGained;
+    private int xpGained;
     @Column
-    int goldGained;
+    private int goldGained;
 }

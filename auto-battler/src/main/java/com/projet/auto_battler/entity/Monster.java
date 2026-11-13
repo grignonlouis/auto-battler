@@ -13,21 +13,21 @@ public class Monster {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column
-    String name;
+    private String name;
     @Column
-    String description;
+    private String description;
     @Column
-    MonsterType type;
+    private MonsterType type;
     @Column
-    int health;
+    private int health;
     @Column
-    int attack;
+    private int attack;
     @Column
-    int defense;
+    private int defense;
     @Column
-    int speed;
+    private int speed;
     @Column
-    boolean isBoss;
+    private boolean isBoss;
 }

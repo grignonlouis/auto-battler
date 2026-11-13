@@ -15,14 +15,14 @@ public class PlayerProfile {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column
-    int totalVictories;
+    private int totalVictories;
     @Column
-    int totalDefeats;
+    private int totalDefeats;
     @Column
-    int gold;
+    private int gold;
     @ManyToOne
     @JoinColumn(name = "highest_dungeon_reached_id")
-    Dungeon highestDungeonReached;
+    private Dungeon highestDungeonReached;
 }

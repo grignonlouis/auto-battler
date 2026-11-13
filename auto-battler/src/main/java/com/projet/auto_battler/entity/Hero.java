@@ -13,26 +13,28 @@ public class Hero {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column
-    String name;
+    private String name;
     @Column
-    String description;
+    private String description;
     @Column
-    Role role;
+    private Role role;
     @Column
-    int health;
+    private int health;
     @Column
-    int attackDamage;
+    private int attackDamage;
     @Column
-    int defense;
+    private int defense;
     @Column
-    int speed;
+    private int speed;
     @Column
-    int level;
+    private int level;
     @Column
-    int experience;
+    private int experience;
     @Column
-    int unlockable;
+    private int unlockable;
+    @Column 
+    private int price;
 
 }

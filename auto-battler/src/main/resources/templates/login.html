@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+>
+</head>
+<body class="container">
+    <h2>Login</h2>
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+    <form action="/login" method="post">
+        <label>
+            Email
+            <input type="text" name="email">
+        </label>
+        <label>
+            Password
+            <input type="password" name="password">
+        </label>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
