@@ -1,6 +1,5 @@
-package main.java.com.projet.auto_battler.entity;
+package com.projet.auto_battler.entity;
 
-import java.lang.annotation.Inherited;
 import java.util.Date;
 
 import lombok.Data;
