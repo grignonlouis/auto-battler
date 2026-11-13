@@ -26,4 +26,14 @@ public class Dungeon {
 
     @ManyToMany 
     private java.util.List<Monster> monsters;
+
+    protected Dungeon() {}   // requis par JPA placeholder
+
+    // pour les placeholders
+    public Dungeon(String name, String description, int difficulty, boolean unlocked) {
+        this.name = name;
+        this.description = description;
+        this.difficulty = difficulty;
+        this.unlocked = unlocked;
+    }
 }

@@ -10,7 +10,13 @@
     <p class="lead text-body-secondary">
         Selectionnez un donjon à explorer.
     </p>
-    <a href="combat" class="btn btn-primary">Placeholder Donjon</a>
+    <a th:href="@{/combat}" class="btn btn-primary">Placeholder Donjon</a>
+    <ul>
+        <li th:each="dungeon : ${dungeons}">
+            <span th:text="${dungeon.id}">1</span> -
+            <span th:text="${dungeon.name}">Nom de l'élément</span>
+        </li>
+    </ul>
 </main>
 
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>

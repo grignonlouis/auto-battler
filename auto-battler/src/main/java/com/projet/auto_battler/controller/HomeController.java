@@ -2,6 +2,11 @@ package com.projet.auto_battler.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import java.util.List;
+
+import com.projet.auto_battler.entity.Dungeon;
+
 
 @Controller
 public class HomeController {
@@ -17,8 +22,14 @@ public class HomeController {
     }
 
     @GetMapping("/donjon")
-    public String donjon() {
-        return "dongeonSelect";
+    public String donjon(Model model) {
+         List<Dungeon> dungeons = List.of(
+                    new Dungeon("Premier élément", "desc1", 1, true),
+                    new Dungeon("Deuxième élément", "desc2", 3, true),
+                    new Dungeon("Troisième élément", "desc3", 2, false)
+                );
+                model.addAttribute("dungeons", dungeons);
+        return "dungeonSelect";
     }
 
     @GetMapping("/combat")
