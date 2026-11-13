@@ -1,0 +1,36 @@
+meta {
+  name: Create monster
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/v1/monsters
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Cave Goblin",
+    "description": "A weak but fast goblin",
+    "monsterType": "NORMAL",
+    "health": 50,
+    "damage": 8,
+    "defense": 2,
+    "speed": 5,
+    "boss": false
+  }
+}
+
+script:post-response {
+  bru.setVar("monsterId", res.body.id);
+}
+
+tests {
+  test("returns 201 with a Location header", function () {
+    expect(res.status).to.equal(201);
+    expect(res.getHeader("location")).to.contain("/api/v1/monsters/");
+    expect(res.body.name).to.equal("Cave Goblin");
+  });
+}

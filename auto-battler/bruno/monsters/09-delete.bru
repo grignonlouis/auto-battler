@@ -1,0 +1,17 @@
+meta {
+  name: Delete monster
+  type: http
+  seq: 9
+}
+
+delete {
+  url: {{baseUrl}}/api/v1/monsters/{{monsterId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("returns 204", function () {
+    expect(res.status).to.equal(204);
+  });
+}

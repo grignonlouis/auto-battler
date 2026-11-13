@@ -1,0 +1,17 @@
+meta {
+  name: Get unknown skill
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/api/v1/skills/999999
+  body: none
+  auth: none
+}
+
+tests {
+  test("returns 404", function () {
+    expect(res.status).to.equal(404);
+  });
+}

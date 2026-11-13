@@ -1,0 +1,18 @@
+meta {
+  name: Get skill by id
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/api/v1/skills/{{skillId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("returns 200 with the skill", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.id).to.equal(bru.getVar("skillId"));
+  });
+}

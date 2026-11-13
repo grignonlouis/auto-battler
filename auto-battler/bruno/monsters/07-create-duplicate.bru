@@ -1,0 +1,30 @@
+meta {
+  name: Create monster (duplicate name)
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/api/v1/monsters
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Cave Goblin",
+    "description": "Same name as an existing monster",
+    "monsterType": "GOBLIN",
+    "health": 50,
+    "damage": 8,
+    "defense": 2,
+    "speed": 5,
+    "boss": false
+  }
+}
+
+tests {
+  test("returns 409", function () {
+    expect(res.status).to.equal(409);
+  });
+}

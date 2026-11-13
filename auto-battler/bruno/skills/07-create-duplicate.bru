@@ -1,0 +1,26 @@
+meta {
+  name: Create skill (duplicate name)
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/api/v1/skills
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Fireball",
+    "description": "Same name as an existing skill",
+    "skillType": "ATTACK",
+    "power": 20
+  }
+}
+
+tests {
+  test("returns 409", function () {
+    expect(res.status).to.equal(409);
+  });
+}

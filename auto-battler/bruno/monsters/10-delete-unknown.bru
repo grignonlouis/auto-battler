@@ -1,0 +1,17 @@
+meta {
+  name: Delete unknown monster
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{baseUrl}}/api/v1/monsters/999999
+  body: none
+  auth: none
+}
+
+tests {
+  test("returns 404", function () {
+    expect(res.status).to.equal(404);
+  });
+}

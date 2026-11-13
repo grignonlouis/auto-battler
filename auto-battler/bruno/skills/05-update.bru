@@ -1,0 +1,27 @@
+meta {
+  name: Update skill
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/api/v1/skills/{{skillId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Fireball",
+    "description": "A ball of fire",
+    "skillType": "ATTACK",
+    "power": 30
+  }
+}
+
+tests {
+  test("returns 200 with updated values", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.power).to.equal(30);
+  });
+}

@@ -1,0 +1,28 @@
+meta {
+  name: Create monster (invalid)
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/api/v1/monsters
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "",
+    "health": -5,
+    "damage": 0,
+    "defense": 0,
+    "speed": 0,
+    "boss": false
+  }
+}
+
+tests {
+  test("returns 400", function () {
+    expect(res.status).to.equal(400);
+  });
+}

@@ -1,0 +1,32 @@
+meta {
+  name: Create skill
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/v1/skills
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Fireball",
+    "description": "A ball of fire",
+    "skillType": "ATTACK",
+    "power": 20
+  }
+}
+
+script:post-response {
+  bru.setVar("skillId", res.body.id);
+}
+
+tests {
+  test("returns 201 with a Location header", function () {
+    expect(res.status).to.equal(201);
+    expect(res.getHeader("location")).to.contain("/api/v1/skills/");
+    expect(res.body.name).to.equal("Fireball");
+  });
+}

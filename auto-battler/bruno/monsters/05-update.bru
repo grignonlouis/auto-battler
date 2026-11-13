@@ -1,0 +1,31 @@
+meta {
+  name: Update monster
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/api/v1/monsters/{{monsterId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Cave Goblin",
+    "description": "A weak but fast goblin",
+    "monsterType": "GOBLIN",
+    "health": 80,
+    "damage": 8,
+    "defense": 2,
+    "speed": 5,
+    "boss": false
+  }
+}
+
+tests {
+  test("returns 200 with updated values", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.health).to.equal(80);
+  });
+}

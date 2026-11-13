@@ -1,0 +1,17 @@
+meta {
+  name: Delete skill
+  type: http
+  seq: 9
+}
+
+delete {
+  url: {{baseUrl}}/api/v1/skills/{{skillId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("returns 204", function () {
+    expect(res.status).to.equal(204);
+  });
+}
