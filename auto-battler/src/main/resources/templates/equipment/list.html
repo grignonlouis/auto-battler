@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head th:replace="~{fragments/layout :: head('Equipment')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="mb-0">Equipment</h1>
+        <a class="btn btn-primary" th:href="@{/equipment/new}">New equipment</a>
+    </div>
+
+    <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+
+    <form class="row g-2 mb-4" method="get" th:action="@{/equipment}">
+        <div class="col">
+            <input type="text" class="form-control" name="search"
+                   placeholder="Search by name" th:value="${search}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </div>
+    </form>
+
+    <table class="table table-hover align-middle">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Slot</th>
+            <th>Rarity</th>
+            <th>Attack</th>
+            <th>Health</th>
+            <th>Defense</th>
+            <th class="text-end">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="item : ${equipmentList}">
+            <td th:text="${item.name}">Name</td>
+            <td th:text="${item.slot}">Slot</td>
+            <td th:text="${item.rarity}">Rarity</td>
+            <td th:text="${item.bonusAttack}">0</td>
+            <td th:text="${item.bonusHealth}">0</td>
+            <td th:text="${item.bonusDefense}">0</td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary"
+                   th:href="@{/equipment/{id}/edit(id=${item.id})}">Edit</a>
+                <form class="d-inline" method="post"
+                      th:action="@{/equipment/{id}/delete(id=${item.id})}"
+                      onsubmit="return confirm('Delete this equipment?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(equipmentList)}">
+            <td colspan="8" class="text-center text-body-secondary">No equipment found.</td>
+        </tr>
+
+        </tbody>
+    </table>
+</main>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
