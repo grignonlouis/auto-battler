@@ -84,7 +84,7 @@ Les rapports des tests sont disponibles dans `target/surefire-reports/`.
 mvn javadoc:javadoc
 ```
 
-La documentation HTML générée est disponible dans `target/site/apidocs/index.html`.
+La documentation HTML générée est disponible dans `target/reports/apidocs/index.html`.
 
 Pour consulter la documentation, ouvrir ce fichier dans un navigateur.
 

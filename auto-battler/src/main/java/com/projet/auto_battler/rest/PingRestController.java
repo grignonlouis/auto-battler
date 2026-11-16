@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PingRestController {
 
     /**
+     * Creates the controller.
+     */
+    public PingRestController() { }
+
+    /**
      * Answers a ping request.
      *
      * @return a JSON object with status "ok"
