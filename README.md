@@ -1,4 +1,4 @@
-<h1 align="center">Auto-Battler</h1>
+# Auto-Battler
 
 <p align="center">
   Application web de gestion d'une guilde de héros, avec combats automatiques simulés côté serveur.<br>
@@ -19,13 +19,11 @@
   <img src="https://img.shields.io/badge/Status-In%20Progress-475569?style=for-the-badge" alt="Status">
 </p>
 
-
 ## Description
 
-Le joueur recrute des héros, compose une équipe de 4 héros maximum, les équipe, puis lance des combats
-automatiques contre des monstres. Les combats sont simulés côté serveur, en Java, et affichés sous forme de journal.
+Le joueur recrute des héros, compose une équipe de 4 héros maximum, les équipe, puis lance des combats automatiques contre des monstres. Les combats sont simulés côté serveur, en Java, et affichés sous forme de journal.
 
-## Stack
+## Stack technique
 
 - Java 21, Maven
 - Spring Boot 4.1.2 (Spring MVC, Spring Data JPA, Thymeleaf, Validation)
@@ -37,9 +35,9 @@ automatiques contre des monstres. Les combats sont simulés côté serveur, en J
 ## Prérequis
 
 - JDK 21
-- Maven (ou le wrapper `./mvnw` fourni)
+- Maven
 
-## Lancement
+## Installation et lancement
 
 ### Développement (base locale, non versionnée)
 
@@ -47,9 +45,11 @@ automatiques contre des monstres. Les combats sont simulés côté serveur, en J
 mvn spring-boot:run
 ```
 
-- Application : http://localhost:8080
-- Console H2 : http://localhost:8080/h2-console
-  (JDBC URL `jdbc:h2:file:./data/devdb`, utilisateur `sa`, mot de passe vide)
+- Application : [http://localhost:8080](http://localhost:8080)
+- Console H2 : [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+- JDBC URL : `jdbc:h2:file:./data/devdb`
+- Utilisateur : `sa`
+- Mot de passe : vide
 
 ### Version livrée (base `db/gamedb.mv.db` incluse dans le dépôt)
 
@@ -59,6 +59,52 @@ mvn spring-boot:run -Dspring-boot.run.profiles=final
 
 Utilise la base du dossier `db/`. La console H2 et les logs SQL sont désactivés.
 
+## Commandes Maven
+
+### Compilation
+
+```bash
+mvn clean
+mvn compile
+mvn clean compile
+```
+
+### Tests
+
+```bash
+mvn test
+mvn clean test
+```
+
+Les rapports des tests sont disponibles dans `target/surefire-reports/`.
+
+### Génération de la Javadoc
+
+```bash
+mvn javadoc:javadoc
+```
+
+La documentation HTML générée est disponible dans `target/site/apidocs/index.html`.
+
+Pour consulter la documentation, ouvrir ce fichier dans un navigateur.
+
+### Packaging et exécution
+
+```bash
+mvn package
+mvn package -DskipTests
+mvn install
+mvn clean package
+```
+
+Le fichier JAR généré se trouve dans le dossier `target/`.
+
+Pour exécuter le JAR :
+
+```bash
+java -jar target/auto-battler.jar
+```
+
 ## Vérification rapide
 
 - `GET http://localhost:8080/` : page d'accueil
@@ -66,7 +112,7 @@ Utilise la base du dossier `db/`. La console H2 et les logs SQL sont désactivé
 
 ## Structure du projet
 
-```
+```text
 src/main/java/.../
 ├── entity/       entités JPA et enums
 ├── repository/   interfaces Spring Data
@@ -75,6 +121,7 @@ src/main/java/.../
 ├── controller/   contrôleurs Thymeleaf (vues)
 ├── rest/         API REST (JSON, DTO uniquement)
 └── config/       configuration, DataSeeder
+
 bruno/            collection Bruno
 db/               base H2 finale (versionnée à la livraison)
 data/             base H2 de développement (ignorée par Git)
@@ -83,22 +130,21 @@ docs/             diagramme de classes, captures
 
 ## API REST
 
-Préfixe `/api/v1`. La collection Bruno du dossier `bruno/` contient une requête par endpoint,
-avec ses assertions (cas nominaux et cas d'erreur : 400, 404, 409).
-Pour l'utiliser : ouvrir Bruno, « Open Collection », choisir le dossier `bruno/`,
-puis sélectionner l'environnement `local`.
+Préfixe `/api/v1`.
 
-## Organisation du travail
+La collection Bruno du dossier `bruno/` contient une requête par endpoint, avec ses assertions (cas nominaux et cas d'erreur : 400, 404, 409).
 
-- `main` est protégée : pas de push direct, tout passe par une pull request.
-- Une branche par fonctionnalité : `feature/hero-crud`, `feature/combat-engine`…
-- Commits courts et préfixés : `feat:`, `fix:`, `test:`, `chore:`, `docs:`.
-- Une seule personne modifie `pom.xml` et `db/`.
+Pour l'utiliser :
+
+1. Ouvrir Bruno.
+2. Sélectionner « Open Collection ».
+3. Choisir le dossier `bruno/`.
+4. Sélectionner l'environnement `local`.
 
 ## Équipe
 
-| Membre        | 
-|---------------|
-| Louis ESCALLE | 
-| Léo VAYRAC    |
+| Membre |
+|---|
+| Louis ESCALLE |
+| Léo VAYRAC |
 | Louis GRIGNON |
