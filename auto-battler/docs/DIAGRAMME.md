@@ -41,7 +41,6 @@ erDiagram
         int health
         int attack_damage
         int defense
-        int speed
         int level
         int experience
         boolean unlockable
@@ -62,7 +61,6 @@ erDiagram
         int bonus_attack
         int bonus_health
         int bonus_defense
-        int bonus_speed
     }
     MONSTER {
         long id PK
@@ -72,7 +70,6 @@ erDiagram
         int health
         int damage
         int defense
-        int speed
         boolean boss
     }
     DUNGEON {
@@ -148,7 +145,6 @@ classDiagram
         -int health
         -int attackDamage
         -int defense
-        -int speed
         -int level
         -int experience
         -boolean unlockable
@@ -171,7 +167,6 @@ classDiagram
         -int bonusAttack
         -int bonusHealth
         -int bonusDefense
-        -int bonusSpeed
     }
     class Monster {
         -Long id
@@ -181,7 +176,6 @@ classDiagram
         -int health
         -int damage
         -int defense
-        -int speed
         -boolean boss
     }
     class Dungeon {
@@ -321,7 +315,6 @@ classDiagram
         -int health
         -int attack
         -int defense
-        -int speed
         -boolean hero
         -List~SkillSnapshot~ skills
         -List~ActiveEffect~ effects
