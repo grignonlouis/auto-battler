@@ -1,0 +1,35 @@
+meta {
+  name: Create equipment
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/v1/equipment
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Iron Sword",
+    "slot": "WEAPON",
+    "rarity": "COMMON",
+    "bonusAttack": 5,
+    "bonusHealth": 0,
+    "bonusDefense": 0,
+    "bonusSpeed": 0
+  }
+}
+
+script:post-response {
+  bru.setVar("equipmentId", res.body.id);
+}
+
+tests {
+  test("returns 201 with a Location header", function () {
+    expect(res.status).to.equal(201);
+    expect(res.getHeader("location")).to.contain("/api/v1/equipment/");
+    expect(res.body.name).to.equal("Iron Sword");
+  });
+}
