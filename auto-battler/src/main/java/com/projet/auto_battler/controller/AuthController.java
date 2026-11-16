@@ -64,7 +64,7 @@ public class AuthController {
             Player player = playerService.createUser(userDTO);
             redirection.addFlashAttribute("welcome", "Welcome " + player.getUsername());
             session.setAttribute("player", player);
-            return "redirect:/dashboard";
+            return "redirect:/";
         } catch (BusinessRuleException e) {
             redirection.addFlashAttribute("error", e.getMessage());
             return "redirect:/register";
@@ -103,7 +103,7 @@ public class AuthController {
         Player player = found.get();
         redirection.addFlashAttribute("welcome", "Welcome " + player.getUsername());
         session.setAttribute("player", player);
-        return "redirect:/dashboard";
+        return "redirect:/";
     }
 
     /**

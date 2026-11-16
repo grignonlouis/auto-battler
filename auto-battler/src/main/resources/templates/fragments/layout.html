@@ -28,14 +28,25 @@
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Heroes</a></li>
-                <li class="nav-item"><a class="nav-link" href="equipe">Teams</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/heroes}">Heroes</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/teams}">Teams</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/skills}">Skills</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/equipment}">Equipment</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/monsters}">Monsters</a></li>
-                <li class="nav-item"><a class="nav-link" href="donjon">Dungeons</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Battle</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">History</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/dungeons}">Dungeons</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/battle}">Battle</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/history}">History</a></li>
+            </ul>
+            <ul class="navbar-nav ms-lg-3">
+                <li class="nav-item" th:if="${session.player == null}">
+                    <a class="nav-link" th:href="@{/login}">Log in</a>
+                </li>
+                <li class="nav-item" th:if="${session.player == null}">
+                    <a class="nav-link" th:href="@{/register}">Sign up</a>
+                </li>
+                <li class="nav-item" th:if="${session.player != null}">
+                    <a class="nav-link" th:href="@{/logout}">Log out</a>
+                </li>
             </ul>
         </div>
     </div>

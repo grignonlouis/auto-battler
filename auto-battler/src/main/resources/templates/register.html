@@ -1,35 +1,53 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
->
-</head>
-<body class="container">
-    <h2>Register</h2>
-    <div th:if="${error}" class="error" th:text="${error}"></div>
-    <form action="/register" method="post">
-        <label>
-            Email
-            <input type="text" name="email">
-        </label>
-        <label>
-            Username
-            <input type="text" name="username">
-        </label>
-        <label>
-            Password
-            <input autocomplete="current-password" type="password" name="password">
-        </label>
-        <label>
-            Confirm Password
-            <input autocomplete="current-password" type="password" name="confirmPassword">
-        </label>
-        <button type="submit">Register</button>
-    </form>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head th:replace="~{fragments/layout :: head('Register')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container py-5">
+    <div class="card auth-card mx-auto">
+        <div class="card-body p-4">
+
+            <h1 class="h3 mb-4">Create an account</h1>
+
+            <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+            <form method="post" th:action="@{/register}">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email"
+                           autocomplete="email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username"
+                           autocomplete="username" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                           autocomplete="new-password" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="confirmPassword" class="form-label">Confirm password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                           autocomplete="new-password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+
+            <p class="text-body-secondary text-center mt-4 mb-0">
+                Already have an account? <a th:href="@{/login}">Log in</a>
+            </p>
+        </div>
+    </div>
+</main>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 </body>
 </html>

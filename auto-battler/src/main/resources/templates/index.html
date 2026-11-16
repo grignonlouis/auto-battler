@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container py-5">
+
+    <section class="py-5 text-center">
+        <h1 class="display-4">Auto-Battler</h1>
+        <p class="lead text-body-secondary mx-auto" style="max-width: 640px;">
+            Run a guild of heroes. Recruit them, equip them, build a team of up to four,
+            then send it into the dungeons. Battles play out on their own: your preparation decides the result.
+        </p>
+        <div class="d-flex justify-content-center gap-2 mt-4">
+            <th:block th:if="${session.player == null}">
+                <a class="btn btn-primary btn-lg" th:href="@{/register}">Create an account</a>
+                <a class="btn btn-outline-secondary btn-lg" th:href="@{/login}">Log in</a>
+            </th:block>
+            <th:block th:if="${session.player != null}">
+                <a class="btn btn-primary btn-lg" th:href="@{/dashboard}">Go to your guild</a>
+            </th:block>
+        </div>
+    </section>
+
+    <section class="py-4">
+        <h2 class="mb-4">How it works</h2>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-3">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p class="text-body-secondary mb-1">Step 1</p>
+                        <h3 class="h5">Recruit and equip</h3>
+                        <p class="mb-0">Pick heroes from the catalog, give them skills and equipment.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p class="text-body-secondary mb-1">Step 2</p>
+                        <h3 class="h5">Build a team</h3>
+                        <p class="mb-0">Choose up to four different heroes who work well together.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p class="text-body-secondary mb-1">Step 3</p>
+                        <h3 class="h5">Pick a dungeon</h3>
+                        <p class="mb-0">Each unlocked dungeon holds a group of monsters and a boss.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p class="text-body-secondary mb-1">Step 4</p>
+                        <h3 class="h5">Watch the battle</h3>
+                        <p class="mb-0">The fight is simulated automatically. Read the battle log turn by turn.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p class="text-body-secondary mb-1">Step 5</p>
+                        <h3 class="h5">Grow stronger</h3>
+                        <p class="mb-0">Victories give experience and gold, and unlock new heroes and dungeons.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-4">
+        <h2 class="mb-4">The basics</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="h5"><i class="bi bi-people me-2"></i>Heroes</h3>
+                        <p>Every hero has a role (warrior, mage, rogue or healer) and its own health, attack,
+                            defense and speed. Speed decides who acts first in a turn.</p>
+                        <p class="mb-0">Heroes gain levels with experience, which raises all their stats.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="h5"><i class="bi bi-lightning me-2"></i>Skills and equipment</h3>
+                        <p>Skills can attack, heal, shield or poison. Equipment boosts stats and fits in one of
+                            three slots: weapon, armor or accessory.</p>
+                        <p class="mb-0">A hero cannot wear two items in the same slot.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="h5"><i class="bi bi-map me-2"></i>Dungeons and monsters</h3>
+                        <p>Monsters are normal, elite or boss. A dungeon never has more than one boss,
+                            and its difficulty sets the rewards.</p>
+                        <p class="mb-0">Some heroes and dungeons start locked and must be earned.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-4">
+        <h2 class="mb-3">Rules at a glance</h2>
+        <ul class="list-group">
+            <li class="list-group-item">A team holds one to four heroes, with no duplicates.</li>
+            <li class="list-group-item">A battle needs a team with at least one hero and an unlocked dungeon.</li>
+            <li class="list-group-item">A battle ends when all monsters or all heroes are defeated.</li>
+            <li class="list-group-item">After 50 turns without a winner, the battle counts as a defeat.</li>
+            <li class="list-group-item">Every battle is saved in your history, with its full log.</li>
+        </ul>
+    </section>
+</main>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
