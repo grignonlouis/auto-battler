@@ -13,6 +13,9 @@ import com.projet.auto_battler.repository.MonsterRepository;
 import com.projet.auto_battler.service.dto.MonsterRequest;
 import com.projet.auto_battler.service.dto.MonsterResponse;
 
+import com.projet.auto_battler.entity.Dungeon;
+import com.projet.auto_battler.repository.DungeonRepository;
+
 /**
  * Business logic for monsters: search, creation, update, deletion and rule checks.
  * Controllers go through this class and never use the repository directly.
@@ -22,14 +25,17 @@ import com.projet.auto_battler.service.dto.MonsterResponse;
 public class MonsterService {
 
     private final MonsterRepository monsterRepository;
+    private final DungeonRepository dungeonRepository;
 
     /**
      * Creates the service with its repository.
      *
      * @param monsterRepository the repository used to access monsters
+     * @param dungeonRepository the repository used to access dungeons
      */
-    public MonsterService(MonsterRepository monsterRepository) {
+    public MonsterService(MonsterRepository monsterRepository, DungeonRepository dungeonRepository) {
         this.monsterRepository = monsterRepository;
+        this.dungeonRepository = dungeonRepository;
     }
 
     /**
@@ -123,14 +129,17 @@ public class MonsterService {
 
     /**
      * Deletes a monster.
-     * Once the Dungeon slice exists, this method must first remove the monster from every dungeon,
-     * because Dungeon owns the relation and the database would refuse the deletion otherwise.
+     * The monster is first removed from every dungeon that contains it, because Dungeon owns the relation
+     * and the database would refuse the deletion otherwise.
      *
      * @param id the id of the monster to delete
      * @throws ResourceNotFoundException if no monster has this id
      */
     public void delete(Long id) {
         Monster monster = getEntityOrThrow(id);
+        for (Dungeon dungeon : dungeonRepository.findByMonstersId(id)) {
+            dungeon.getMonsters().removeIf(existing -> existing.getId().equals(id));
+        }
         monsterRepository.delete(monster);
     }
 

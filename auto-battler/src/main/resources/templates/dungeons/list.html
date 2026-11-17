@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head th:replace="~{fragments/layout :: head('Dungeons')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="mb-0">Dungeons</h1>
+        <a class="btn btn-primary" th:href="@{/dungeons/new}">New dungeon</a>
+    </div>
+
+    <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+
+    <form class="row g-2 mb-4" method="get" th:action="@{/dungeons}">
+        <div class="col">
+            <input type="text" class="form-control" name="search"
+                   placeholder="Search by name" th:value="${search}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </div>
+    </form>
+
+    <table class="table table-hover align-middle">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Difficulty</th>
+            <th>Monsters</th>
+            <th>Threat</th>
+            <th>Status</th>
+            <th class="text-end">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="dungeon : ${dungeons}">
+            <td th:text="${dungeon.name}">Name</td>
+            <td th:text="${dungeon.difficulty}">1</td>
+            <td>
+                <span th:each="monster : ${dungeon.monsters}"
+                      class="badge me-1"
+                      th:classappend="${monster.boss} ? 'text-bg-danger' : 'text-bg-secondary'"
+                      th:text="${monster.name}">Monster</span>
+                <span class="text-body-secondary" th:if="${#lists.isEmpty(dungeon.monsters)}">None</span>
+            </td>
+            <td th:text="${dungeon.threatScore}">0</td>
+            <td>
+                <span class="badge text-bg-success" th:if="${dungeon.unlocked}">Unlocked</span>
+                <span class="badge text-bg-secondary" th:unless="${dungeon.unlocked}">Locked</span>
+            </td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary"
+                   th:href="@{/dungeons/{id}/edit(id=${dungeon.id})}">Edit</a>
+                <form class="d-inline" method="post"
+                      th:action="@{/dungeons/{id}/delete(id=${dungeon.id})}"
+                      onsubmit="return confirm('Delete this dungeon?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(dungeons)}">
+            <td colspan="6" class="text-center text-body-secondary">No dungeons found.</td>
+        </tr>
+
+        </tbody>
+    </table>
+</main>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
