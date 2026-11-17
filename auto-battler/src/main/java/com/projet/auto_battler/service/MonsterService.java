@@ -85,7 +85,6 @@ public class MonsterService {
         request.setHealth(monster.getHealth());
         request.setDamage(monster.getDamage());
         request.setDefense(monster.getDefense());
-        request.setBoss(monster.isBoss());
         return request;
     }
 
@@ -171,6 +170,5 @@ public class MonsterService {
         monster.setHealth(request.getHealth());
         monster.setDamage(request.getDamage());
         monster.setDefense(request.getDefense());
-        monster.setBoss(request.isBoss());
     }
 }

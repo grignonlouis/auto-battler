@@ -58,11 +58,6 @@
             </div>
         </div>
 
-        <div class="form-check mb-4">
-            <input type="checkbox" class="form-check-input" th:field="*{boss}">
-            <label class="form-check-label" th:for="${#ids.prev('boss')}">Boss</label>
-        </div>
-
         <div class="d-flex gap-2">
             <button type="submit" class="btn btn-primary">Save</button>
             <a class="btn btn-outline-secondary" th:href="@{/monsters}">Cancel</a>

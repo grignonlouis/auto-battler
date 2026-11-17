@@ -41,5 +41,5 @@ public class Monster {
 
     private int defense;
 
-    private boolean boss;
+    //private boolean boss;
 }

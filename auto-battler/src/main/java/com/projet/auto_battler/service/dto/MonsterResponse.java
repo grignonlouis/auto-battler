@@ -13,7 +13,6 @@ import com.projet.auto_battler.entity.MonsterType;
  * @param health      the health points
  * @param damage      the damage dealt by its attacks
  * @param defense     the damage reduction
- * @param boss        true if the monster is a boss
  */
 public record MonsterResponse(
         Long id,
@@ -22,8 +21,8 @@ public record MonsterResponse(
         MonsterType monsterType,
         int health,
         int damage,
-        int defense,
-        boolean boss) {
+        int defense
+        ) {
 
     /**
      * Converts a Monster entity into a MonsterResponse by copying its fields.
@@ -39,7 +38,6 @@ public record MonsterResponse(
                 monster.getMonsterType(),
                 monster.getHealth(),
                 monster.getDamage(),
-                monster.getDefense(),
-                monster.isBoss());
+                monster.getDefense());
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.projet.auto_battler.entity.Dungeon;
 import com.projet.auto_battler.entity.Monster;
+import com.projet.auto_battler.entity.MonsterType;
 import com.projet.auto_battler.exception.BusinessRuleException;
 import com.projet.auto_battler.exception.ResourceNotFoundException;
 import com.projet.auto_battler.repository.DungeonRepository;
@@ -258,7 +259,7 @@ public class DungeonService {
      * @throws BusinessRuleException if more than one of them is a boss
      */
     private void checkAtMostOneBoss(Collection<Monster> monsters) {
-        long bosses = monsters.stream().filter(Monster::isBoss).count();
+        long bosses = monsters.stream().filter(m -> m.getMonsterType() == MonsterType.BOSS).count();
         if (bosses > 1) {
             throw new BusinessRuleException("monsterIds", "A dungeon can contain at most one boss.");
         }
@@ -274,7 +275,15 @@ public class DungeonService {
         int total = 0;
         for (Monster monster : dungeon.getMonsters()) {
             int score = monster.getHealth() / 10 + monster.getDamage();
-            total += monster.isBoss() ? score * 3 : score;
+            if(monster.getMonsterType() == MonsterType.BOSS) {
+                total += score * 3;
+            } 
+            else if(monster.getMonsterType() == MonsterType.ELITE) {
+                total += score * 1.5;            
+            }
+            else {
+                total += score;
+            }
         }
         return total;
     }
