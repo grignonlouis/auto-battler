@@ -30,7 +30,6 @@
             <th>Name</th>
             <th>Difficulty</th>
             <th>Monsters</th>
-            <th>Threat</th>
             <th>Status</th>
             <th class="text-end">Actions</th>
         </tr>
@@ -40,13 +39,6 @@
         <tr th:each="dungeon : ${dungeons}">
             <td th:text="${dungeon.name}">Name</td>
             <td th:text="${dungeon.difficulty}">1</td>
-            <td>
-                <span th:each="monster : ${dungeon.monsters}"
-                      class="badge me-1"
-                      th:classappend="${monster.boss} ? 'text-bg-danger' : 'text-bg-secondary'"
-                      th:text="${monster.name}">Monster</span>
-                <span class="text-body-secondary" th:if="${#lists.isEmpty(dungeon.monsters)}">None</span>
-            </td>
             <td th:text="${dungeon.threatScore}">0</td>
             <td>
                 <span class="badge text-bg-success" th:if="${dungeon.unlocked}">Unlocked</span>

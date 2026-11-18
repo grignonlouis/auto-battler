@@ -121,8 +121,8 @@ public class SkillService {
 
     /**
      * Deletes a skill.
-     * Once the Hero entity exists, this method must first remove the skill from every hero,
-     * because Hero owns the relation and the database would refuse the deletion otherwise.
+     * The Hero entity owns the many-to-many relation; this operation does not currently unlink
+     * the skill from heroes before deleting it.
      *
      * @param id the id of the skill to delete
      * @throws ResourceNotFoundException if no skill has this id
@@ -134,7 +134,7 @@ public class SkillService {
 
     /**
      * Returns the Skill entity itself, not a DTO.
-     * Intended for other services (for example the hero service); controllers must not use it.
+     * Intended for internal service use; controllers should use the DTO-returning methods.
      *
      * @param id the skill id
      * @return the skill entity

@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+
+class Player
+class PlayerProfile
+class Team
+class Hero
+class Equipment
+class Skill
+class Dungeon
+class Monster
+class Battle
+class BattleLogEntry
+
+Player "1" --> "1" PlayerProfile : profile
+PlayerProfile "0..*" --> "0..1" Dungeon : highestDungeonReached
+Team "0..*" -- "0..*" Hero : heros
+Hero "0..*" -- "0..*" Equipment : equipments
+Hero "0..*" -- "0..*" Skill : skills
+Dungeon "0..*" -- "0..*" Monster : monsters
+
+note bottom of Battle
+  No JPA associations
+  are currently declared.
+end note
+note bottom of BattleLogEntry
+  No JPA association
+  to Battle is declared.
+end note
+@enduml

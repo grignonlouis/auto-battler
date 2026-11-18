@@ -40,3 +40,6 @@ build/
 ### H2 (fichiers temporaires, la base finale db/*.mv.db reste versionnée) ###
 *.lock.db
 *.trace.db
+
+### Documentation générée hors target/ ###
+docs/**/images/

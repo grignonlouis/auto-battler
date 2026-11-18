@@ -20,6 +20,7 @@ import org.springframework.data.domain.Sort;
 
 import com.projet.auto_battler.entity.Dungeon;
 import com.projet.auto_battler.entity.Monster;
+import com.projet.auto_battler.entity.MonsterType;
 import com.projet.auto_battler.exception.BusinessRuleException;
 import com.projet.auto_battler.exception.ResourceNotFoundException;
 import com.projet.auto_battler.repository.DungeonRepository;
@@ -75,22 +76,22 @@ class DungeonServiceTest {
     }
 
     /**
-     * Builds a monster with the given id, stats and boss flag.
+     * Builds a monster with the given id and stats.
      *
-     * @param id     the monster id
-     * @param name   the monster name
-     * @param boss   true if the monster is a boss
-     * @param health the monster health
-     * @param damage the monster damage
+     * @param id          the monster id
+     * @param name        the monster name
+     * @param health      the monster health
+     * @param damage      the monster damage
+     * @param MonsterType the monster type
      * @return a monster entity
      */
-    private Monster monster(Long id, String name, boolean boss, int health, int damage) {
+    private Monster monster(Long id, String name, int health, int damage, MonsterType type) {
         Monster monster = new Monster();
         monster.setId(id);
         monster.setName(name);
-        monster.setBoss(boss);
         monster.setHealth(health);
         monster.setDamage(damage);
+        monster.setMonsterType(type);
         return monster;
     }
 
@@ -117,7 +118,7 @@ class DungeonServiceTest {
      */
     @Test
     void createLinksTheSelectedMonsters() {
-        Monster goblin = monster(10L, "Goblin", false, 100, 5);
+        Monster goblin = monster(10L, "Goblin", 100, 5, MonsterType.NORMAL);
         DungeonRequest request = request("Crypt");
         request.setMonsterIds(Set.of(10L));
         when(dungeonRepository.existsByNameIgnoreCase("Crypt")).thenReturn(false);
@@ -153,8 +154,8 @@ class DungeonServiceTest {
         DungeonRequest request = request("Crypt");
         request.setMonsterIds(Set.of(10L, 11L));
         when(dungeonRepository.existsByNameIgnoreCase("Crypt")).thenReturn(false);
-        when(monsterService.getEntityOrThrow(10L)).thenReturn(monster(10L, "Lich", true, 200, 10));
-        when(monsterService.getEntityOrThrow(11L)).thenReturn(monster(11L, "Dragon", true, 300, 15));
+        when(monsterService.getEntityOrThrow(10L)).thenReturn(monster(10L, "Lich", 200, 10, MonsterType.BOSS));
+        when(monsterService.getEntityOrThrow(11L)).thenReturn(monster(11L, "Dragon", 300, 15, MonsterType.BOSS));
 
         BusinessRuleException exception =
                 assertThrows(BusinessRuleException.class, () -> dungeonService.create(request));
@@ -210,8 +211,8 @@ class DungeonServiceTest {
     @Test
     void updateReplacesTheMonsters() {
         Dungeon dungeon = dungeon(1L, "Crypt");
-        dungeon.getMonsters().add(monster(10L, "Goblin", false, 100, 5));
-        Monster orc = monster(11L, "Orc", false, 150, 8);
+        dungeon.getMonsters().add(monster(10L, "Goblin", 100, 5, MonsterType.NORMAL));
+        Monster orc = monster(11L, "Orc", 150, 8, MonsterType.NORMAL);
         DungeonRequest request = request("Crypt");
         request.setMonsterIds(Set.of(11L));
         when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon));
@@ -279,7 +280,7 @@ class DungeonServiceTest {
     @Test
     void addMonsterAddsMonsterToDungeon() {
         Dungeon dungeon = dungeon(1L, "Crypt");
-        Monster goblin = monster(10L, "Goblin", false, 100, 5);
+        Monster goblin = monster(10L, "Goblin", 100, 5, MonsterType.NORMAL);
         when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon));
         when(monsterService.getEntityOrThrow(10L)).thenReturn(goblin);
 
@@ -294,7 +295,7 @@ class DungeonServiceTest {
     @Test
     void addMonsterTwiceKeepsASingleCopy() {
         Dungeon dungeon = dungeon(1L, "Crypt");
-        Monster goblin = monster(10L, "Goblin", false, 100, 5);
+        Monster goblin = monster(10L, "Goblin", 100, 5, MonsterType.NORMAL);
         dungeon.getMonsters().add(goblin);
         when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon));
         when(monsterService.getEntityOrThrow(10L)).thenReturn(goblin);
@@ -310,8 +311,8 @@ class DungeonServiceTest {
     @Test
     void addMonsterFailsWhenDungeonAlreadyHasABoss() {
         Dungeon dungeon = dungeon(1L, "Crypt");
-        dungeon.getMonsters().add(monster(10L, "Lich", true, 200, 10));
-        Monster secondBoss = monster(11L, "Dragon", true, 300, 15);
+        dungeon.getMonsters().add(monster(10L, "Lich", 200, 10, MonsterType.BOSS));
+        Monster secondBoss = monster(11L, "Dragon", 300, 15, MonsterType.BOSS);
         when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon));
         when(monsterService.getEntityOrThrow(11L)).thenReturn(secondBoss);
 
@@ -326,8 +327,8 @@ class DungeonServiceTest {
     @Test
     void addMonsterAllowsNormalMonsterWhenDungeonHasABoss() {
         Dungeon dungeon = dungeon(1L, "Crypt");
-        dungeon.getMonsters().add(monster(10L, "Lich", true, 200, 10));
-        Monster goblin = monster(11L, "Goblin", false, 100, 5);
+        dungeon.getMonsters().add(monster(10L, "Lich", 200, 10, MonsterType.BOSS));
+        Monster goblin = monster(11L, "Goblin", 100, 5, MonsterType.NORMAL);
         when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon));
         when(monsterService.getEntityOrThrow(11L)).thenReturn(goblin);
 
@@ -342,7 +343,7 @@ class DungeonServiceTest {
     @Test
     void removeMonsterRemovesItFromDungeon() {
         Dungeon dungeon = dungeon(1L, "Crypt");
-        Monster goblin = monster(10L, "Goblin", false, 100, 5);
+        Monster goblin = monster(10L, "Goblin", 100, 5, MonsterType.NORMAL);
         dungeon.getMonsters().add(goblin);
         when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon));
         when(monsterService.getEntityOrThrow(10L)).thenReturn(goblin);
@@ -354,17 +355,19 @@ class DungeonServiceTest {
 
     /**
      * The threat score adds up health / 10 + damagefor each monster, and the boss counts three times.
-     * Goblin: 100 / 10 + 5 = 15. Lich (boss): ((200 / 10 ) + 10) x 3 = 90. Total: 105.
+     * Goblin: 100 / 10 + 5 = 15. Golem (elite): ((150 / 10 ) + 15) x 2 = 60. Lich (boss): ((200 / 10 ) + 30) x 3 = 150
+     * Total: 15 + 45 + 150 = 225
      */
     @Test
     void threatScoreSumsMonstersAndTriplesTheBoss() {
         Dungeon dungeon = dungeon(1L, "Crypt");
-        dungeon.getMonsters().add(monster(10L, "Goblin", false, 100, 5));
-        dungeon.getMonsters().add(monster(11L, "Lich", true, 200, 10));
+        dungeon.getMonsters().add(monster(10L, "Goblin", 100, 5, MonsterType.NORMAL));
+        dungeon.getMonsters().add(monster(11L, "Golem", 150, 15, MonsterType.ELITE));
+        dungeon.getMonsters().add(monster(12L, "Lich", 200, 30, MonsterType.BOSS));
         when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon));
 
         int score = dungeonService.threatScore(1L);
 
-        assertThat(score).isEqualTo(105);
+        assertThat(score).isEqualTo(225);
     }
 }

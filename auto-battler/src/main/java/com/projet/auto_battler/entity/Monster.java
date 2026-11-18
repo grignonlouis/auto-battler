@@ -13,7 +13,7 @@ import lombok.Setter;
 
 /**
  * An enemy that heroes fight in dungeons.
- * A monster can be flagged as a boss. The relation with dungeons is owned by the Dungeon entity.
+ * The relation with dungeons is owned by the Dungeon entity.
  */
 @Entity
 @Getter
@@ -40,6 +40,4 @@ public class Monster {
     private int damage;
 
     private int defense;
-
-    //private boolean boss;
 }

@@ -1,0 +1,27 @@
+= ADR 002: Schéma H2 porté par les entités JPA
+:page-root: ..
+
+include::_partials/nav.adocinc[]
+
+== Status
+
+Acceptée.
+
+== Context
+
+`pom.xml` ne déclare ni Flyway ni Liquibase.
+`application.properties` configure une H2 fichier et `spring.jpa.hibernate.ddl-auto=update`.
+Un second profil, `final`, change le fichier de base sans introduire de scripts SQL.
+Le contexte historique de ce choix n'est pas documenté.
+
+== Decision
+
+Considérer les annotations JPA comme la source du schéma.
+Hibernate crée et met à jour les tables au démarrage.
+
+== Consequences
+
+* La mise en route locale ne demande pas de serveur de base ni de commande de migration.
+* Le profil `final` peut créer `./db/gamedb` à la volée. Aucun instantané de cette base n'est versionné.
+* L'historique des changements de schéma n'est pas rejouable.
+* Les tables de jointure sans `@JoinTable` portent des noms choisis par Hibernate.

@@ -37,6 +37,4 @@ public class MonsterRequest {
 
     @Min(value = 0, message = "Defense must not be negative")
     private int defense;
-
-    private boolean boss;
 }

@@ -1,0 +1,78 @@
+= Architecture
+:page-root: .
+
+include::_partials/nav.adocinc[]
+
+Auto-Battler est un module Spring Boot unique.
+Les contrôleurs web et REST appellent les services.
+Les services portent les règles métier, ouvrent les transactions et transforment les entités en DTO.
+Les repositories Spring Data JPA sont le seul accès à Hibernate.
+Il n'y a pas de scripts de migration : le schéma est celui des annotations JPA.
+
+Les pages Thymeleaf et l'API JSON partagent les services des donjons, monstres et équipements.
+Les compétences n'ont qu'une interface HTML.
+Le compte (inscription, connexion, déconnexion) n'existe que côté pages.
+
+`PlayerService` crée le compte, vérifie le mot de passe et ne produit pas de DTO REST.
+Le joueur connecté est stocké dans la session HTTP sous l'attribut `player`.
+Aucun filtre d'authentification ne protège les routes.
+
+== Composants
+
+Le diagramme ne montre que des éléments présents dans le dépôt.
+H2 est embarqué dans le même processus que l'application.
+
+plantuml::{diagramsdir}/components.puml[format=svg, alt="Composants de l'application Spring Boot"]
+
+== Exceptions
+
+`ResourceNotFoundException` est levée par les services lorsqu'un identifiant est inconnu.
+`WebExceptionHandler`, limité au package `controller`, la transforme en page `error/404` avec le statut HTTP 404.
+
+`BusinessRuleException` signale une règle refusée (nom déjà pris, second boss dans un donjon).
+Les contrôleurs Thymeleaf l'attrapent localement et renvoient vers le formulaire.
+
+`RestExceptionHandler` est une classe vide, sans annotation Spring.
+`ApiError` n'est sérialisé par aucune classe active.
+Les erreurs REST suivent le comportement par défaut de Spring MVC, y compris lorsque les commentaires Javadoc des contrôleurs REST mentionnent encore 400, 404 ou 409.
+
+== Connexion
+
+Le message d'échec est le même si l'e-mail est inconnu ou si le mot de passe est faux.
+Le mot de passe est stocké en hash BCrypt.
+
+plantuml::{diagramsdir}/login-sequence.puml[format=svg, alt="Séquence de connexion"]
+
+L'inscription suit le même stockage de session après `PlayerService.createUser`.
+La confirmation de mot de passe est vérifiée dans le service et lève `IllegalArgumentException` lorsque les deux saisies diffèrent.
+Aucun gestionnaire global ne transforme cette exception en page dédiée.
+
+== Un boss par donjon
+
+`DungeonService` refuse une association qui introduirait un second monstre de type `MonsterType.BOSS`.
+La même règle s'applique à la création et à la mise à jour d'un donjon lorsque la liste de monstres est fournie.
+
+plantuml::{diagramsdir}/dungeon-monster-sequence.puml[format=svg, alt="Séquence d'association d'un monstre à un donjon"]
+
+== Modèle de données
+
+Le schéma est appliqué par Hibernate avec `ddl-auto=update`.
+Seules les associations réellement déclarées sur les entités sont dessinées.
+`Battle` et `BattleLogEntry` n'ont pas d'association JPA.
+`Player` n'est pas relié à `Team`.
+
+plantuml::{diagramsdir}/entities.puml[format=svg, alt="Relations JPA déclarées"]
+
+Les many-to-many sont `Team`–`Hero`, `Hero`–`Equipment`, `Hero`–`Skill` et `Dungeon`–`Monster`.
+Seul le dernier fixe le nom de la table (`dungeon_monster`) et des colonnes.
+`Hero.role` et `Battle.status` n'ont pas d'`@Enumerated` : Hibernate les stocke en ordinal.
+`Monster.monsterType`, `Equipment.slot`, `Equipment.rarity` et `Skill.skillType` sont stockés en chaîne.
+
+== Décisions
+
+Les ADR ci-dessous portent sur des choix visibles dans le code, non évidents.
+Le statut « acceptée » signifie que le code suit cette décision aujourd'hui.
+
+* xref:decisions/002-h2-schema-owned-by-jpa.adoc[ADR 002] — H2 fichier, schéma porté par JPA
+* xref:decisions/003-thymeleaf-and-rest.adoc[ADR 003] — Thymeleaf et REST sur les mêmes services
+* xref:decisions/004-session-auth-without-security-filter.adoc[ADR 004] — Session HTTP et BCrypt, sans filtre Spring Security

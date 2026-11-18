@@ -51,7 +51,6 @@ class MonsterServiceTest {
         request.setHealth(50);
         request.setDamage(8);
         request.setDefense(2);
-        request.setBoss(false);
         return request;
     }
 

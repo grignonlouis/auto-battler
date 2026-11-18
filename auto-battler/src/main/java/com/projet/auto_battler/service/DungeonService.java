@@ -275,16 +275,15 @@ public class DungeonService {
         int total = 0;
         for (Monster monster : dungeon.getMonsters()) {
             int score = monster.getHealth() / 10 + monster.getDamage();
-            if(monster.getMonsterType() == MonsterType.BOSS) {
+            if (monster.getMonsterType() == MonsterType.BOSS) {
                 total += score * 3;
-            } 
-            else if(monster.getMonsterType() == MonsterType.ELITE) {
-                total += score * 1.5;            
-            }
-            else {
+            } else if (monster.getMonsterType() == MonsterType.ELITE) {
+                total += score * 2;
+            } else {
                 total += score;
             }
         }
+
         return total;
     }
 

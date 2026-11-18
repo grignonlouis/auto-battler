@@ -1,0 +1,25 @@
+= Auto-Battler
+:description: Guide technique de l'application Spring Boot Auto-Battler.
+:page-root: .
+
+include::_partials/nav.adocinc[]
+
+Application web Java de gestion de ressources pour un jeu fantasy.
+Ce guide décrit uniquement ce qui est implémenté dans le dépôt.
+
+== Périmètre actuel
+
+Un compte peut être créé et une session ouverte.
+Les pages Thymeleaf permettent de consulter et modifier des donjons, des monstres, des équipements et des compétences.
+L'API REST sous `/api/v1` couvre le ping, les donjons, les monstres et les équipements.
+
+Les entités `Hero`, `Team`, `Battle` et `BattleLogEntry` existent dans le modèle JPA, sans repository ni service.
+Le package `combat` ne contient pas de code.
+Les templates `fight.html`, `teamBuilding.html`, `bilan.html` et `dungeonSelect.html` ne sont branchés sur aucun contrôleur.
+Les liens de navigation vers `/heroes`, `/teams`, `/battle`, `/history` et `/dashboard` n'ont pas de contrôleur.
+
+== Contenu du guide
+
+* xref:architecture.adoc[Architecture] — couches, flux importants et modèle de données
+* xref:development.adoc[Développement] — configuration locale, tests et génération de ce guide
+* xref:api.adoc[API REST] — routes exposées et écarts par rapport au code

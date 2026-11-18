@@ -1,0 +1,15 @@
+@startuml
+autonumber
+actor "HTTP client" as client
+participant DungeonRestController
+participant DungeonService
+participant MonsterService
+
+client -> DungeonRestController : PUT /api/v1/dungeons/{id}/monsters/{monsterId}
+DungeonRestController -> DungeonService : addMonster(id, monsterId)
+DungeonService -> DungeonService : load dungeon
+DungeonService -> MonsterService : getEntityOrThrow(monsterId)
+DungeonService -> DungeonService : refuse a second BOSS
+DungeonService --> DungeonRestController : DungeonResponse
+DungeonRestController --> client : 200 JSON
+@enduml

@@ -1,0 +1,26 @@
+= ADR 003: Pages Thymeleaf et API REST sur les mêmes services
+:page-root: ..
+
+include::_partials/nav.adocinc[]
+
+== Status
+
+Acceptée.
+
+== Context
+
+Le module dépend à la fois de Spring MVC Thymeleaf et de Web MVC pour des contrôleurs JSON.
+Les donjons, monstres et équipements ont un contrôleur HTML et un contrôleur REST qui appellent le même service.
+Les compétences ont un contrôleur HTML et un service, mais pas de contrôleur REST actif.
+Le contexte historique de cette asymétrie n'est pas documenté.
+
+== Decision
+
+Exposer l'interface web serveur et l'API JSON depuis la même application, en partageant la couche service et les DTO de requête des ressources qui ont les deux interfaces.
+
+== Consequences
+
+* Une règle métier, comme l'unicité du nom ou la limite d'un boss par donjon, n'est écrite qu'une fois.
+* Les formulaires et le JSON partagent les contraintes Jakarta des DTO.
+* L'API n'est pas un miroir complet des pages : les compétences et le compte n'ont pas d'endpoint REST.
+* Les templates de combat présents dans `templates/` ne constituent pas une troisième interface tant qu'aucun contrôleur ne les rend.

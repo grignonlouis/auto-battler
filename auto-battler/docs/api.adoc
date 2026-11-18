@@ -1,0 +1,28 @@
+= API REST
+:page-root: .
+
+include::_partials/nav.adocinc[]
+
+Les routes JSON sont préfixées par `/api/v1`.
+
+Les ressources exposées sont le ping, les donjons, les monstres et les équipements.
+Les listes de donjons et de monstres acceptent un paramètre de requête `search` facultatif.
+Les créations répondent 201 avec un en-tête `Location`.
+Un donjon peut associer ou dissocier un monstre (`PUT` / `DELETE` sur `/api/v1/dungeons/{id}/monsters/{monsterId}`).
+
+Il n'existe pas de route REST pour les compétences, l'inscription ou la connexion.
+`SkillRestController` n'est pas un composant Spring.
+
+Les corps annotés `@Valid` sont contrôlés par Jakarta Validation.
+Les contraintes détaillées sont celles des DTO (`MonsterRequest`, `EquipmentRequest`, `DungeonRequest`) : le code reste la référence.
+
+== Erreurs
+
+Ce guide ne fixe pas un format d'erreur JSON 400, 404 ou 409.
+`RestExceptionHandler` ne porte ni `@RestControllerAdvice` ni `@ExceptionHandler`.
+`ApiError` n'est pas renvoyé par le code actuel.
+
+== Bruno
+
+La collection `bruno/` rejoue des appels d'exemple.
+Les scénarios Skill ne visent pas une route active.

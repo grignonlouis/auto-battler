@@ -8,6 +8,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
+/**
+ * Stores one turn's textual entry for a battle log.
+ *
+ * <p>The current entity has no JPA association to {@link Battle}.
+ */
 @Data
 @Entity
 public class BattleLogEntry {

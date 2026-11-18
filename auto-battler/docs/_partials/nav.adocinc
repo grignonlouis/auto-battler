@@ -1,0 +1,5 @@
+[.small]
+xref:{page-root}/index.adoc[Accueil]
+· xref:{page-root}/architecture.adoc[Architecture]
+· xref:{page-root}/development.adoc[Développement]
+· xref:{page-root}/api.adoc[API REST]

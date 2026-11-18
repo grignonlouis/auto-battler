@@ -8,6 +8,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
+/**
+ * Persists a hero's combat statistics, role, equipment and skills.
+ *
+ * <p>Heroes are associated with equipment and skills through many-to-many mappings.
+ */
 @Data
 @Entity
 public class Hero {

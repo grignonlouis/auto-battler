@@ -1,0 +1,27 @@
+= ADR 004: Authentification de session sans filtre Spring Security
+:page-root: ..
+
+include::_partials/nav.adocinc[]
+
+== Status
+
+Acceptée.
+
+== Context
+
+Le `pom.xml` dépend de `spring-security-crypto`, pas du starter Spring Security web.
+`SecurityConfig` ne déclare qu'un bean `BCryptPasswordEncoder`.
+`AuthController` place l'entité `Player` dans la session HTTP après une connexion réussie et invalide la session à la déconnexion.
+Aucune configuration de chaîne de filtres, de rôles ou de protection d'URL n'est présente.
+Le contexte historique de ce choix n'est pas documenté.
+
+== Decision
+
+Hasher les mots de passe avec BCrypt et mémoriser le joueur dans la session HTTP, sans filtre d'authentification devant les contrôleurs.
+
+== Consequences
+
+* L'inscription et la connexion fonctionnent sans configurer Spring Security.
+* Le message de connexion ne distingue pas un e-mail inconnu d'un mot de passe incorrect.
+* Les routes HTML et REST restent accessibles sans session. Rien dans la configuration n'exige d'être connecté pour appeler l'API ou ouvrir un formulaire.
+* `isAdmin` est stocké sur `Player`, sans contrôle d'accès associé dans le code parcouru.

@@ -1,0 +1,90 @@
+= Développement
+:page-root: .
+
+include::_partials/nav.adocinc[]
+
+Les commandes d'installation, de lancement et de test sont dans le README à la racine du dépôt.
+Elles s'exécutent dans `auto-battler/`.
+Aucun service externe n'est requis.
+Il n'y a pas de variables d'environnement obligatoires, ni de Flyway / Liquibase.
+
+== Profils
+
+La configuration active est dans `src/main/resources`.
+
+[cols="1,2,2", options="header"]
+|===
+|Profil |Base H2 |Particularités
+
+|défaut (`application.properties`)
+|`./data/devdb`
+|Console H2 sur `/h2-console`, SQL affiché, cache Thymeleaf désactivé. `data/` est ignoré par Git.
+
+|`final` (`application-final.properties`)
+|`./db/gamedb`
+|Console H2 et logs SQL désactivés. Le fichier de base n'est pas versionné. Hibernate le crée au lancement.
+
+|`schema-docs` (tests uniquement)
+|H2 mémoire
+|Utilisé par `JpaSchemaExportTest` pour écrire `target/jpa-schema.sql` depuis les métadonnées JPA.
+|===
+
+Les deux profils applicatifs gardent `spring.jpa.hibernate.ddl-auto=update` et `spring.jpa.open-in-view=false`.
+
+== Tests
+
+```bash
+./mvnw test
+```
+
+[cols="1,2", options="header"]
+|===
+|Classe |Rôle
+
+|`AutoBattlerApplicationTests`
+|Démarrage du contexte Spring.
+
+|`DungeonServiceTest`, `MonsterServiceTest`, `EquipmentServiceTest`
+|Tests unitaires Mockito des services correspondants.
+
+|`JpaSchemaExportTest`
+|Export DDL vers `target/jpa-schema.sql`. Ignoré tant que `-Ddocumentation.schema.export=true` n'est pas passé.
+
+|`SkillServiceTest`, `SkillRestControllerTest`, `SkillRepositoryTest`
+|Fichiers présents, sans méthode de test.
+|===
+
+Le dossier `bruno/` est une collection manuelle (environnement `local`, `http://localhost:8080`).
+Elle contient des requêtes pour le ping, les monstres, les équipements et les compétences.
+Les requêtes Skill ne correspondent pas à une route active.
+Il n'y a pas de dossier Bruno pour les donjons.
+Bruno n'est pas exécuté par Maven.
+
+== Documentation
+
+Les sources sont dans `docs/`, en AsciiDoc.
+Les diagrammes PlantUML vivent dans `docs/diagrams/` et sont inclus par les pages.
+Le profil Maven `docs` génère le HTML sans compiler ni tester l'application :
+
+```bash
+./mvnw -Pdocs asciidoctor:process-asciidoc
+```
+
+Ouvrir `target/docs/index.html`.
+Les SVG générés ne sont pas versionnés.
+
+Un job GitHub Actions `Documentation` rejoue cette commande lorsque `docs/` ou le `pom.xml` changent, et publie le HTML en artefact.
+Il n'y a pas de site public.
+
+Décrire le comportement présent dans le code.
+Ne pas documenter comme livré un template, une entité ou un contrôleur qui n'est pas branché.
+
+== Conventions observées
+
+Le dépôt n'impose ni Checkstyle, ni Spotless, ni EditorConfig, ni workflow de branches.
+
+* Un seul module Maven, packages par couche sous `com.projet.auto_battler`.
+* Les contrôleurs délèguent aux services ; les règles (doublon de nom, un boss par donjon) restent dans les services.
+* Les DTO de requête portent la validation Jakarta et sont réutilisés par les formulaires HTML et l'API JSON.
+* Les réponses REST des ressources sont des records (`MonsterResponse`, `DungeonResponse`, `EquipmentResponse`).
+* Les entités encore sans parcours (`Hero`, `Team`, `Battle`, `BattleLogEntry`) restent mappées, sans repository.

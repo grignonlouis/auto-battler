@@ -15,6 +15,8 @@
 	<description>Auto-battler fantasy de gestion d'équipe (projet JEE)</description>
 	<properties>
 		<java.version>21</java.version>
+		<asciidoctor-maven-plugin.version>3.2.0</asciidoctor-maven-plugin.version>
+		<asciidoctorj-diagram-plantuml.version>1.2026.2</asciidoctorj-diagram-plantuml.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -124,5 +126,57 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>docs</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.asciidoctor</groupId>
+						<artifactId>asciidoctor-maven-plugin</artifactId>
+						<version>${asciidoctor-maven-plugin.version}</version>
+						<dependencies>
+							<dependency>
+								<groupId>org.asciidoctor</groupId>
+								<artifactId>asciidoctorj-diagram-plantuml</artifactId>
+								<version>${asciidoctorj-diagram-plantuml.version}</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<sourceDirectory>${project.basedir}/docs</sourceDirectory>
+							<outputDirectory>${project.build.directory}/docs</outputDirectory>
+							<preserveDirectories>true</preserveDirectories>
+							<backend>html5</backend>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/docs</directory>
+									<excludes>
+										<exclude>**/*</exclude>
+									</excludes>
+								</resource>
+							</resources>
+							<requires>
+								<require>asciidoctor-diagram</require>
+							</requires>
+							<attributes>
+								<toc>left</toc>
+								<sectanchors>true</sectanchors>
+								<icons>font</icons>
+								<plantuml-format>svg</plantuml-format>
+								<imagesdir>images</imagesdir>
+								<diagramsdir>${project.basedir}/docs/diagrams</diagramsdir>
+							</attributes>
+							<logHandler>
+								<failIf>
+									<severity>ERROR</severity>
+								</failIf>
+							</logHandler>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>

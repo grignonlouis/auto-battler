@@ -9,6 +9,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
+/**
+ * Stores a player's accumulated victories, defeats, gold and highest dungeon reached.
+ *
+ * <p>The highest dungeon is a many-to-one association, so several profiles may reference the same dungeon.
+ */
 @Data
 @Entity
 public class PlayerProfile {

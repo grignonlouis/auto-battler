@@ -3,7 +3,9 @@ package com.projet.auto_battler.exception;
 import java.util.Map;
 
 /**
- * Error body returned by the REST API.
+ * Error body intended for REST error responses.
+ *
+ * <p>No active REST exception handler currently serializes this record.
  *
  * @param timestamp   when the error happened, in milliseconds
  * @param status      the HTTP status code

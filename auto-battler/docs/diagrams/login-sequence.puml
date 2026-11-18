@@ -1,0 +1,18 @@
+@startuml
+autonumber
+actor Player
+participant AuthController
+participant PlayerService
+participant PlayerRepository
+
+Player -> AuthController : POST /login (email, password)
+AuthController -> PlayerService : findPlayer(email, password)
+PlayerService -> PlayerRepository : findByEmail(email)
+PlayerService -> PlayerService : verify password hash with BCrypt
+alt credentials valid
+  AuthController -> AuthController : HTTP session attribute player
+  AuthController --> Player : redirect to /
+else credentials invalid
+  AuthController --> Player : redirect to /login with generic error
+end
+@enduml

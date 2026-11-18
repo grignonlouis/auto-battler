@@ -1,9 +1,9 @@
 package com.projet.auto_battler.exception;
 
 /**
- * Thrown when a business rule is violated (duplicate name, full team, second boss in a dungeon...).
+ * Thrown when a business rule is violated (for example, a duplicate name or a second boss in a dungeon).
  * It can optionally name the form field the error relates to.
- * Mapped to HTTP 409 by the REST exception handler.
+ * No REST exception handler currently maps this exception to an HTTP response.
  */
 public class BusinessRuleException extends RuntimeException {
 
