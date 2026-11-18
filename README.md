@@ -59,13 +59,23 @@ java -jar target/auto-battler-0.0.1-SNAPSHOT.jar
 ## Documentation
 
 Le guide est dans `auto-battler/docs/`.
-Génération HTML, sans compiler ni tester l'application :
+
+En local, depuis le dossier `auto-battler/`, sans compiler ni tester l'application :
 
 ```bash
 ./mvnw -Pdocs asciidoctor:process-asciidoc
 ```
 
-Ouvrir `target/docs/index.html`.
+Ouvrir `target/docs/index.html` dans un navigateur.
+
+Le même HTML est aussi produit par GitHub Actions, sur le workflow **Documentation**, quand `auto-battler/docs/`, `auto-battler/pom.xml` ou le workflow lui-même change. On peut aussi le lancer à la main : onglet **Actions**, workflow **Documentation**, **Run workflow**.
+
+Pour ouvrir le résultat :
+
+1. Aller sur [Actions](https://github.com/grignonlouis/auto-battler/actions/workflows/docs.yml).
+2. Ouvrir une exécution verte du workflow **Documentation**.
+3. En bas de la page, dans **Artifacts**, télécharger `documentation-html`.
+4. Décompresser l'archive et ouvrir `index.html` dans un navigateur.
 
 ## Équipe
 
