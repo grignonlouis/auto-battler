@@ -25,10 +25,6 @@ import com.projet.auto_battler.repository.MonsterRepository;
 import com.projet.auto_battler.service.dto.MonsterRequest;
 import com.projet.auto_battler.service.dto.MonsterResponse;
 
-/**
- * Unit tests for MonsterService.
- * The repository is mocked, so no Spring context and no database are involved.
- */
 @ExtendWith(MockitoExtension.class)
 class MonsterServiceTest {
 
@@ -38,12 +34,6 @@ class MonsterServiceTest {
     @InjectMocks
     private MonsterService monsterService;
 
-    /**
-     * Builds a valid request used as a starting point by the tests.
-     *
-     * @param name the monster name
-     * @return a request with default stats
-     */
     private MonsterRequest request(String name) {
         MonsterRequest request = new MonsterRequest();
         request.setName(name);
@@ -54,13 +44,6 @@ class MonsterServiceTest {
         return request;
     }
 
-    /**
-     * Builds a saved monster with the given id and name.
-     *
-     * @param id   the monster id
-     * @param name the monster name
-     * @return a monster entity
-     */
     private Monster monster(Long id, String name) {
         Monster monster = new Monster();
         monster.setId(id);
@@ -70,9 +53,6 @@ class MonsterServiceTest {
         return monster;
     }
 
-    /**
-     * A valid creation saves the monster and returns it with the trimmed name.
-     */
     @Test
     void createSavesMonsterWhenNameIsFree() {
         when(monsterRepository.existsByNameIgnoreCase("Goblin")).thenReturn(false);
@@ -88,9 +68,6 @@ class MonsterServiceTest {
         assertThat(response.name()).isEqualTo("Goblin");
     }
 
-    /**
-     * Creating a monster with a name that already exists is refused and nothing is saved.
-     */
     @Test
     void createFailsWhenNameAlreadyExists() {
         when(monsterRepository.existsByNameIgnoreCase("Goblin")).thenReturn(true);
@@ -100,9 +77,6 @@ class MonsterServiceTest {
         verify(monsterRepository, never()).save(any());
     }
 
-    /**
-     * A monster can be updated while keeping its own name.
-     */
     @Test
     void updateAllowsKeepingOwnName() {
         when(monsterRepository.findById(1L)).thenReturn(Optional.of(monster(1L, "Goblin")));
@@ -114,9 +88,6 @@ class MonsterServiceTest {
         assertThat(response.name()).isEqualTo("Goblin");
     }
 
-    /**
-     * Updating a monster with the name of another monster is refused.
-     */
     @Test
     void updateFailsWhenNameBelongsToAnotherMonster() {
         when(monsterRepository.findById(1L)).thenReturn(Optional.of(monster(1L, "Goblin")));
@@ -127,9 +98,6 @@ class MonsterServiceTest {
         verify(monsterRepository, never()).save(any());
     }
 
-    /**
-     * Looking up an unknown id raises a not-found error.
-     */
     @Test
     void findByIdFailsWhenMonsterDoesNotExist() {
         when(monsterRepository.findById(99L)).thenReturn(Optional.empty());
@@ -137,9 +105,6 @@ class MonsterServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> monsterService.findById(99L));
     }
 
-    /**
-     * Deleting an unknown id raises a not-found error and deletes nothing.
-     */
     @Test
     void deleteFailsWhenMonsterDoesNotExist() {
         when(monsterRepository.findById(99L)).thenReturn(Optional.empty());
@@ -149,9 +114,6 @@ class MonsterServiceTest {
         verify(monsterRepository, never()).delete(any());
     }
 
-    /**
-     * Without a search text, every monster is returned.
-     */
     @Test
     void findAllWithoutSearchReturnsEverything() {
         when(monsterRepository.findAll(any(Sort.class)))
@@ -162,9 +124,6 @@ class MonsterServiceTest {
         assertThat(result).hasSize(2);
     }
 
-    /**
-     * With a search text, only the repository search result is returned.
-     */
     @Test
     void findAllWithSearchFiltersByName() {
         when(monsterRepository.findByNameContainingIgnoreCase(any(String.class), any(Sort.class)))

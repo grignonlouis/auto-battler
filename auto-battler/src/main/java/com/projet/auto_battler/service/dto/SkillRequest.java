@@ -10,11 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Input data used to create or update a skill.
- * It backs both the Thymeleaf form and the JSON body of the REST API.
- * It is a regular class with getters and setters so that th:field can bind to it.
- */
 @Getter
 @Setter
 @NoArgsConstructor

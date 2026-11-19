@@ -16,46 +16,20 @@ import com.projet.auto_battler.service.dto.RegisterDTO;
 
 import jakarta.servlet.http.HttpSession;
 
-/**
- * Web controller handling registration, login and logout.
- * The logged-in player is kept in the HTTP session under the "player" attribute.
- * It contains no business rules: those live in PlayerService.
- */
 @Controller
 public class AuthController {
 
     private final PlayerService playerService;
 
-    /**
-     * Creates the controller with its service.
-     *
-     * @param playerService the service handling player logic
-     */
     public AuthController(PlayerService playerService) {
         this.playerService = playerService;
     }
 
-    /**
-     * Shows the registration form.
-     *
-     * @return the name of the registration view
-     */
     @GetMapping("/register")
     public String showRegisterForm() {
         return "register";
     }
 
-    /**
-     * Handles the registration form.
-     * On success, the new player is logged in and redirected to the dashboard.
-     * If a business rule fails (for example the email is already used), the user is sent back
-     * to the form with the error message.
-     *
-     * @param userDTO     the submitted form data
-     * @param redirection holder for the flash messages
-     * @param session     the HTTP session in which the player is stored
-     * @return a redirect to the dashboard on success, otherwise to the registration form
-     */
     @PostMapping("/register")
     public String register(@ModelAttribute RegisterDTO userDTO,
                            RedirectAttributes redirection,
@@ -71,32 +45,18 @@ public class AuthController {
         }
     }
 
-    /**
-     * Shows the login form.
-     *
-     * @return the name of the login view
-     */
     @GetMapping("/login")
     public String showLoginForm() {
         return "login";
     }
 
-    /**
-     * Handles the login form.
-     * The error message is the same whether the email or the password is wrong,
-     * so that it does not reveal which emails are registered.
-     *
-     * @param dto         the submitted email and password
-     * @param redirection holder for the flash messages
-     * @param session     the HTTP session in which the player is stored
-     * @return a redirect to the dashboard on success, otherwise to the login form
-     */
     @PostMapping("/login")
     public String login(@ModelAttribute LoginDTO dto,
                         RedirectAttributes redirection,
                         HttpSession session) {
         Optional<Player> found = playerService.findPlayer(dto.getEmail(), dto.getPassword());
         if (found.isEmpty()) {
+            // Same text for an unknown email and a bad password, so registered addresses stay hidden.
             redirection.addFlashAttribute("error", "Invalid email or password.");
             return "redirect:/login";
         }
@@ -106,12 +66,6 @@ public class AuthController {
         return "redirect:/";
     }
 
-    /**
-     * Logs the player out by ending the HTTP session.
-     *
-     * @param session the HTTP session to invalidate
-     * @return a redirect to the home page
-     */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();

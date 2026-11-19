@@ -9,11 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
-/**
- * Persists the dates, status and rewards recorded for a battle.
- *
- * <p>This entity currently has no JPA association to a team, dungeon or battle log.
- */
+// No link to a team, a dungeon, or a battle log yet.
 @Data
 @Entity
 public class Battle {

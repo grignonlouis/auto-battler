@@ -8,11 +8,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
-/**
- * A named collection of heroes.
- *
- * <p>The current JPA model maps its heroes as a many-to-many association; no player association is declared here.
- */
 @Data
 @Entity
 public class Team {

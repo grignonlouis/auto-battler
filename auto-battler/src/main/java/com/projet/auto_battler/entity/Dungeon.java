@@ -15,11 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * A dungeon that heroes can explore, filled with monsters.
- * Dungeon owns the many-to-many relation with Monster: the join table is dungeon_monster,
- * and linking or unlinking a monster means changing the monsters set of the dungeon.
- */
 @Entity
 @Getter
 @Setter

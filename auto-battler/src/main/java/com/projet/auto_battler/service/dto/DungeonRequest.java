@@ -12,11 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Input data used to create or update a dungeon.
- * It backs both the Thymeleaf form and the JSON body of the REST API.
- * The monsters are given as a set of ids, and the service loads the matching entities.
- */
 @Getter
 @Setter
 @NoArgsConstructor

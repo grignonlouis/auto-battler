@@ -1,9 +1,5 @@
 package com.projet.auto_battler.rest;
 
-/**
- * Placeholder for REST-specific exception mappings.
- *
- * <p>No advice or exception handlers are currently registered in this class.
- */
+// REST exception mappings are not registered yet.
 public class RestExceptionHandler {
 }

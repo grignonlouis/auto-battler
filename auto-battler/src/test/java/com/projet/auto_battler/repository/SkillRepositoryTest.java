@@ -1,4 +1,4 @@
-// @DataJpaTest : la contrainte d'unicité du nom est bien appliquée par la base.
+// @DataJpaTest still to write: the database must reject a duplicate skill name.
 
 package com.projet.auto_battler.repository;
 

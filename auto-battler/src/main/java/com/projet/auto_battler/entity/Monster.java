@@ -11,10 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * An enemy that heroes fight in dungeons.
- * The relation with dungeons is owned by the Dungeon entity.
- */
 @Entity
 @Getter
 @Setter

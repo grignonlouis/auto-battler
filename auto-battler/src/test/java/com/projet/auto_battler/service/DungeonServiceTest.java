@@ -27,10 +27,6 @@ import com.projet.auto_battler.repository.DungeonRepository;
 import com.projet.auto_battler.service.dto.DungeonRequest;
 import com.projet.auto_battler.service.dto.DungeonResponse;
 
-/**
- * Unit tests for DungeonService.
- * The repository and the monster service are mocked, so no Spring context and no database are involved.
- */
 @ExtendWith(MockitoExtension.class)
 class DungeonServiceTest {
 
@@ -43,12 +39,6 @@ class DungeonServiceTest {
     @InjectMocks
     private DungeonService dungeonService;
 
-    /**
-     * Builds a valid request without monsters, used as a starting point by the tests.
-     *
-     * @param name the dungeon name
-     * @return a request with default values
-     */
     private DungeonRequest request(String name) {
         DungeonRequest request = new DungeonRequest();
         request.setName(name);
@@ -58,13 +48,6 @@ class DungeonServiceTest {
         return request;
     }
 
-    /**
-     * Builds a dungeon with the given id and name, without any monster.
-     *
-     * @param id   the dungeon id
-     * @param name the dungeon name
-     * @return a dungeon entity
-     */
     private Dungeon dungeon(Long id, String name) {
         Dungeon dungeon = new Dungeon();
         dungeon.setId(id);
@@ -75,16 +58,6 @@ class DungeonServiceTest {
         return dungeon;
     }
 
-    /**
-     * Builds a monster with the given id and stats.
-     *
-     * @param id          the monster id
-     * @param name        the monster name
-     * @param health      the monster health
-     * @param damage      the monster damage
-     * @param MonsterType the monster type
-     * @return a monster entity
-     */
     private Monster monster(Long id, String name, int health, int damage, MonsterType type) {
         Monster monster = new Monster();
         monster.setId(id);
@@ -95,9 +68,6 @@ class DungeonServiceTest {
         return monster;
     }
 
-    /**
-     * A valid creation saves the dungeon and returns it with the trimmed name.
-     */
     @Test
     void createSavesDungeonWhenNameIsFree() {
         when(dungeonRepository.existsByNameIgnoreCase("Crypt")).thenReturn(false);
@@ -113,9 +83,6 @@ class DungeonServiceTest {
         assertThat(response.name()).isEqualTo("Crypt");
     }
 
-    /**
-     * Creating a dungeon with selected monsters links them to the dungeon.
-     */
     @Test
     void createLinksTheSelectedMonsters() {
         Monster goblin = monster(10L, "Goblin", 100, 5, MonsterType.NORMAL);
@@ -131,9 +98,6 @@ class DungeonServiceTest {
         assertThat(response.monsters().get(0).name()).isEqualTo("Goblin");
     }
 
-    /**
-     * Creating a dungeon with an unknown monster id fails and nothing is saved.
-     */
     @Test
     void createFailsWhenAMonsterDoesNotExist() {
         DungeonRequest request = request("Crypt");
@@ -146,9 +110,6 @@ class DungeonServiceTest {
         verify(dungeonRepository, never()).save(any());
     }
 
-    /**
-     * Creating a dungeon with two bosses is refused, and the error points at the monsters field.
-     */
     @Test
     void createFailsWhenTwoBossesAreSelected() {
         DungeonRequest request = request("Crypt");
@@ -164,9 +125,6 @@ class DungeonServiceTest {
         verify(dungeonRepository, never()).save(any());
     }
 
-    /**
-     * Creating a dungeon with a name that already exists is refused and nothing is saved.
-     */
     @Test
     void createFailsWhenNameAlreadyExists() {
         when(dungeonRepository.existsByNameIgnoreCase("Crypt")).thenReturn(true);
@@ -178,9 +136,6 @@ class DungeonServiceTest {
         verify(dungeonRepository, never()).save(any());
     }
 
-    /**
-     * A dungeon can be updated while keeping its own name.
-     */
     @Test
     void updateAllowsKeepingOwnName() {
         when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon(1L, "Crypt")));
@@ -192,9 +147,6 @@ class DungeonServiceTest {
         assertThat(response.name()).isEqualTo("Crypt");
     }
 
-    /**
-     * Updating a dungeon with the name of another dungeon is refused.
-     */
     @Test
     void updateFailsWhenNameBelongsToAnotherDungeon() {
         when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon(1L, "Crypt")));
@@ -205,9 +157,6 @@ class DungeonServiceTest {
         verify(dungeonRepository, never()).save(any());
     }
 
-    /**
-     * Updating a dungeon replaces its monsters by the selected ones.
-     */
     @Test
     void updateReplacesTheMonsters() {
         Dungeon dungeon = dungeon(1L, "Crypt");
@@ -226,9 +175,6 @@ class DungeonServiceTest {
                 .containsExactly("Orc");
     }
 
-    /**
-     * Looking up an unknown id raises a not-found error.
-     */
     @Test
     void findByIdFailsWhenDungeonDoesNotExist() {
         when(dungeonRepository.findById(99L)).thenReturn(Optional.empty());
@@ -236,9 +182,6 @@ class DungeonServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> dungeonService.findById(99L));
     }
 
-    /**
-     * Deleting an unknown id raises a not-found error and deletes nothing.
-     */
     @Test
     void deleteFailsWhenDungeonDoesNotExist() {
         when(dungeonRepository.findById(99L)).thenReturn(Optional.empty());
@@ -248,9 +191,6 @@ class DungeonServiceTest {
         verify(dungeonRepository, never()).delete(any());
     }
 
-    /**
-     * Without a search text, every dungeon is returned.
-     */
     @Test
     void findAllWithoutSearchReturnsEverything() {
         when(dungeonRepository.findAll(any(Sort.class)))
@@ -261,9 +201,6 @@ class DungeonServiceTest {
         assertThat(result).hasSize(2);
     }
 
-    /**
-     * With a search text, only the repository search result is returned.
-     */
     @Test
     void findAllWithSearchFiltersByName() {
         when(dungeonRepository.findByNameContainingIgnoreCase(any(String.class), any(Sort.class)))
@@ -274,9 +211,6 @@ class DungeonServiceTest {
         assertThat(result).extracting(DungeonResponse::name).containsExactly("Crypt");
     }
 
-    /**
-     * Adding a monster to a dungeon puts it in the dungeon monster set.
-     */
     @Test
     void addMonsterAddsMonsterToDungeon() {
         Dungeon dungeon = dungeon(1L, "Crypt");
@@ -289,9 +223,6 @@ class DungeonServiceTest {
         assertThat(dungeon.getMonsters()).containsExactly(goblin);
     }
 
-    /**
-     * Adding a monster that is already in the dungeon changes nothing.
-     */
     @Test
     void addMonsterTwiceKeepsASingleCopy() {
         Dungeon dungeon = dungeon(1L, "Crypt");
@@ -305,9 +236,6 @@ class DungeonServiceTest {
         assertThat(dungeon.getMonsters()).hasSize(1);
     }
 
-    /**
-     * A second boss cannot be added to a dungeon that already has one.
-     */
     @Test
     void addMonsterFailsWhenDungeonAlreadyHasABoss() {
         Dungeon dungeon = dungeon(1L, "Crypt");
@@ -321,9 +249,6 @@ class DungeonServiceTest {
         assertThat(dungeon.getMonsters()).doesNotContain(secondBoss);
     }
 
-    /**
-     * A normal monster can still be added to a dungeon that already has a boss.
-     */
     @Test
     void addMonsterAllowsNormalMonsterWhenDungeonHasABoss() {
         Dungeon dungeon = dungeon(1L, "Crypt");
@@ -337,9 +262,6 @@ class DungeonServiceTest {
         assertThat(dungeon.getMonsters()).contains(goblin);
     }
 
-    /**
-     * Removing a monster takes it out of the dungeon monster set.
-     */
     @Test
     void removeMonsterRemovesItFromDungeon() {
         Dungeon dungeon = dungeon(1L, "Crypt");
@@ -353,11 +275,6 @@ class DungeonServiceTest {
         assertThat(dungeon.getMonsters()).isEmpty();
     }
 
-    /**
-     * The threat score adds up health / 10 + damagefor each monster, and the boss counts three times.
-     * Goblin: 100 / 10 + 5 = 15. Golem (elite): ((150 / 10 ) + 15) x 2 = 60. Lich (boss): ((200 / 10 ) + 30) x 3 = 150
-     * Total: 15 + 45 + 150 = 225
-     */
     @Test
     void threatScoreSumsMonstersAndTriplesTheBoss() {
         Dungeon dungeon = dungeon(1L, "Crypt");

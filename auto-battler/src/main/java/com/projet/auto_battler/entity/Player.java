@@ -7,11 +7,6 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
-/**
- * A registered player account.
- *
- * <p>The account has a one-to-one JPA association with a profile. Passwords are stored as hashes.
- */
 @Data
 @Entity
 public class Player {
@@ -30,14 +25,6 @@ public class Player {
 
     private boolean isAdmin;
 
-
-    /**
-     * Creates a non-administrator account with the supplied password hash.
-     *
-     * @param name the player's username
-     * @param email the player's email address
-     * @param password the encoded password value to store
-     */
     public Player(String name, String email, String password) {
         this.username = name;
         this.email = email;

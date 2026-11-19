@@ -16,10 +16,6 @@ import com.projet.auto_battler.service.dto.MonsterResponse;
 import com.projet.auto_battler.entity.Dungeon;
 import com.projet.auto_battler.repository.DungeonRepository;
 
-/**
- * Business logic for monsters: search, creation, update, deletion and rule checks.
- * Controllers go through this class and never use the repository directly.
- */
 @Service
 @Transactional
 public class MonsterService {
@@ -27,23 +23,11 @@ public class MonsterService {
     private final MonsterRepository monsterRepository;
     private final DungeonRepository dungeonRepository;
 
-    /**
-     * Creates the service with its repository.
-     *
-     * @param monsterRepository the repository used to access monsters
-     * @param dungeonRepository the repository used to access dungeons
-     */
     public MonsterService(MonsterRepository monsterRepository, DungeonRepository dungeonRepository) {
         this.monsterRepository = monsterRepository;
         this.dungeonRepository = dungeonRepository;
     }
 
-    /**
-     * Returns the monsters sorted by name, optionally filtered by a search text.
-     *
-     * @param search text that must be contained in the name, or null/blank for all monsters
-     * @return the matching monsters
-     */
     @Transactional(readOnly = true)
     public List<MonsterResponse> findAll(String search) {
         Sort sort = Sort.by("name");
@@ -56,25 +40,11 @@ public class MonsterService {
         return monsters.stream().map(MonsterResponse::from).toList();
     }
 
-    /**
-     * Returns one monster by its id.
-     *
-     * @param id the monster id
-     * @return the monster
-     * @throws ResourceNotFoundException if no monster has this id
-     */
     @Transactional(readOnly = true)
     public MonsterResponse findById(Long id) {
         return MonsterResponse.from(getEntityOrThrow(id));
     }
 
-    /**
-     * Builds the data used to pre-fill the edit form.
-     *
-     * @param id the monster id
-     * @return a request object holding the current values of the monster
-     * @throws ResourceNotFoundException if no monster has this id
-     */
     @Transactional(readOnly = true)
     public MonsterRequest getForEdit(Long id) {
         Monster monster = getEntityOrThrow(id);
@@ -88,14 +58,6 @@ public class MonsterService {
         return request;
     }
 
-    /**
-     * Creates a new monster.
-     * The name must be unique, ignoring case.
-     *
-     * @param request the data of the new monster
-     * @return the created monster
-     * @throws BusinessRuleException if the name is already used
-     */
     public MonsterResponse create(MonsterRequest request) {
         String name = request.getName().trim();
         if (monsterRepository.existsByNameIgnoreCase(name)) {
@@ -106,16 +68,6 @@ public class MonsterService {
         return MonsterResponse.from(monsterRepository.save(monster));
     }
 
-    /**
-     * Updates an existing monster.
-     * The new name must not be used by another monster, but the monster may keep its own name.
-     *
-     * @param id      the id of the monster to update
-     * @param request the new data
-     * @return the updated monster
-     * @throws ResourceNotFoundException if no monster has this id
-     * @throws BusinessRuleException     if another monster already uses the name
-     */
     public MonsterResponse update(Long id, MonsterRequest request) {
         Monster monster = getEntityOrThrow(id);
         String name = request.getName().trim();
@@ -126,43 +78,21 @@ public class MonsterService {
         return MonsterResponse.from(monsterRepository.save(monster));
     }
 
-    /**
-     * Deletes a monster.
-     * The monster is first removed from every dungeon that contains it, because Dungeon owns the relation
-     * and the database would refuse the deletion otherwise.
-     *
-     * @param id the id of the monster to delete
-     * @throws ResourceNotFoundException if no monster has this id
-     */
     public void delete(Long id) {
         Monster monster = getEntityOrThrow(id);
+        // Dungeon owns the join table, so a linked monster must be removed or the delete fails.
         for (Dungeon dungeon : dungeonRepository.findByMonstersId(id)) {
             dungeon.getMonsters().removeIf(existing -> existing.getId().equals(id));
         }
         monsterRepository.delete(monster);
     }
 
-    /**
-     * Returns the Monster entity itself, not a DTO.
-     * Intended for other services (for example the dungeon service); controllers must not use it.
-     *
-     * @param id the monster id
-     * @return the monster entity
-     * @throws ResourceNotFoundException if no monster has this id
-     */
     @Transactional(readOnly = true)
     public Monster getEntityOrThrow(Long id) {
         return monsterRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Monster", id));
     }
 
-    /**
-     * Copies the fields of a request into an entity, trimming the name.
-     * Shared by create and update.
-     *
-     * @param request the source data
-     * @param monster the entity to fill
-     */
     private void copyToEntity(MonsterRequest request, Monster monster) {
         monster.setName(request.getName().trim());
         monster.setDescription(request.getDescription());

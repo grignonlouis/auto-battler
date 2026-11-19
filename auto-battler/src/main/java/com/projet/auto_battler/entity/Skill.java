@@ -11,11 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * A skill that a hero can use in combat (attack, heal, shield or poison).
- * Each instance maps to one row of the skill table.
- * The relation between heroes and skills is owned by the Hero entity.
- */
 @Entity
 @Getter
 @Setter

@@ -10,9 +10,7 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-/**
- * Generates a disposable SQL schema from the JPA model for the documentation build.
- */
+// The schema-docs profile writes target/jpa-schema.sql. This test only checks that the file exists.
 @SpringBootTest
 @ActiveProfiles("schema-docs")
 @EnabledIfSystemProperty(named = "documentation.schema.export", matches = "true")

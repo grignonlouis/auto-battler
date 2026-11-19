@@ -13,32 +13,16 @@ import com.projet.auto_battler.repository.SkillRepository;
 import com.projet.auto_battler.service.dto.SkillRequest;
 import com.projet.auto_battler.service.dto.SkillResponse;
 
-/**
- * Business logic for skills: search, creation, update, deletion and rule checks.
- * Controllers go through this class and never use the repository directly.
- * Entities are converted to DTOs here, while the transaction is still open.
- */
 @Service
 @Transactional
 public class SkillService {
 
     private final SkillRepository skillRepository;
 
-    /**
-     * Creates the service with its repository.
-     *
-     * @param skillRepository the repository used to access skills
-     */
     public SkillService(SkillRepository skillRepository) {
         this.skillRepository = skillRepository;
     }
 
-    /**
-     * Returns the skills sorted by name, optionally filtered by a search text.
-     *
-     * @param search text that must be contained in the name, or null/blank for all skills
-     * @return the matching skills
-     */
     @Transactional(readOnly = true)
     public List<SkillResponse> findAll(String search) {
         Sort sort = Sort.by("name");
@@ -51,25 +35,11 @@ public class SkillService {
         return skills.stream().map(SkillResponse::from).toList();
     }
 
-    /**
-     * Returns one skill by its id.
-     *
-     * @param id the skill id
-     * @return the skill
-     * @throws ResourceNotFoundException if no skill has this id
-     */
     @Transactional(readOnly = true)
     public SkillResponse findById(Long id) {
         return SkillResponse.from(getEntityOrThrow(id));
     }
 
-    /**
-     * Builds the data used to pre-fill the edit form.
-     *
-     * @param id the skill id
-     * @return a request object holding the current values of the skill
-     * @throws ResourceNotFoundException if no skill has this id
-     */
     @Transactional(readOnly = true)
     public SkillRequest getForEdit(Long id) {
         Skill skill = getEntityOrThrow(id);
@@ -81,14 +51,6 @@ public class SkillService {
         return request;
     }
 
-    /**
-     * Creates a new skill.
-     * The name must be unique, ignoring case.
-     *
-     * @param request the data of the new skill
-     * @return the created skill
-     * @throws BusinessRuleException if the name is already used
-     */
     public SkillResponse create(SkillRequest request) {
         String name = request.getName().trim();
         if (skillRepository.existsByNameIgnoreCase(name)) {
@@ -99,16 +61,6 @@ public class SkillService {
         return SkillResponse.from(skillRepository.save(skill));
     }
 
-    /**
-     * Updates an existing skill.
-     * The new name must not be used by another skill, but the skill may keep its own name.
-     *
-     * @param id      the id of the skill to update
-     * @param request the new data
-     * @return the updated skill
-     * @throws ResourceNotFoundException if no skill has this id
-     * @throws BusinessRuleException     if another skill already uses the name
-     */
     public SkillResponse update(Long id, SkillRequest request) {
         Skill skill = getEntityOrThrow(id);
         String name = request.getName().trim();
@@ -119,40 +71,18 @@ public class SkillService {
         return SkillResponse.from(skillRepository.save(skill));
     }
 
-    /**
-     * Deletes a skill.
-     * The Hero entity owns the many-to-many relation; this operation does not currently unlink
-     * the skill from heroes before deleting it.
-     *
-     * @param id the id of the skill to delete
-     * @throws ResourceNotFoundException if no skill has this id
-     */
     public void delete(Long id) {
+        // Hero owns this relation and is not unlinked here, so delete fails once a hero has the skill.
         Skill skill = getEntityOrThrow(id);
         skillRepository.delete(skill);
     }
 
-    /**
-     * Returns the Skill entity itself, not a DTO.
-     * Intended for internal service use; controllers should use the DTO-returning methods.
-     *
-     * @param id the skill id
-     * @return the skill entity
-     * @throws ResourceNotFoundException if no skill has this id
-     */
     @Transactional(readOnly = true)
     public Skill getEntityOrThrow(Long id) {
         return skillRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Skill", id));
     }
 
-    /**
-     * Copies the fields of a request into an entity, trimming the name.
-     * Shared by create and update.
-     *
-     * @param request the source data
-     * @param skill   the entity to fill
-     */
     private void copyToEntity(SkillRequest request, Skill skill) {
         skill.setName(request.getName().trim());
         skill.setDescription(request.getDescription());

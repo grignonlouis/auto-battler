@@ -11,10 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Input data used to create or update a piece of equipment.
- * It backs both the Thymeleaf form and the JSON body of the REST API.
- */
 @Getter
 @Setter
 @NoArgsConstructor

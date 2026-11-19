@@ -1,9 +1,8 @@
-// JUnit 5 + Mockito (repository mocké, pas de Spring). Cas à couvrir :
-//  - create : cas nominal (le repository reçoit une entité sauvegardée)
-//  - create : nom déjà existant -> BusinessRuleException
-//  - update : nom pris par une AUTRE compétence -> BusinessRuleException ; même nom que soi-même -> OK
-//  - findById / update / delete sur id inconnu -> ResourceNotFoundException
-//  - findAll avec et sans search
+// Still to write (JUnit 5, mocked repository, no Spring):
+// create saves; a duplicate name throws BusinessRuleException;
+// update rejects another skill's name but keeps its own;
+// an unknown id on find, update, and delete throws ResourceNotFoundException;
+// findAll with and without a search text.
 
 package com.projet.auto_battler.service;
 

@@ -11,11 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * A piece of equipment that gives stat bonuses to the hero wearing it.
- * Each piece fits in one slot (weapon, armor or accessory).
- * The relation between heroes and equipment is owned by the Hero entity.
- */
 @Entity
 @Getter
 @Setter
