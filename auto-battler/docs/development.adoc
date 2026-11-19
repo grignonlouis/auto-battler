@@ -44,7 +44,7 @@ Les deux profils applicatifs gardent `spring.jpa.hibernate.ddl-auto=update` et `
 |`AutoBattlerApplicationTests`
 |Démarrage du contexte Spring.
 
-|`DungeonServiceTest`, `MonsterServiceTest`, `EquipmentServiceTest`
+|`DungeonServiceTest`, `MonsterServiceTest`, `EquipmentServiceTest`, `PlayerServiceTest`
 |Tests unitaires Mockito des services correspondants.
 
 |`JpaSchemaExportTest`
@@ -55,7 +55,7 @@ Les deux profils applicatifs gardent `spring.jpa.hibernate.ddl-auto=update` et `
 |===
 
 Le dossier `bruno/` est une collection manuelle (environnement `local`, `http://localhost:8080`).
-Elle contient des requêtes pour le ping, les monstres, les équipements et les compétences.
+Elle contient des requêtes pour le ping, les joueurs, les monstres, les équipements et les compétences.
 Les requêtes Skill ne correspondent pas à une route active.
 Il n'y a pas de dossier Bruno pour les donjons.
 Bruno n'est pas exécuté par Maven.

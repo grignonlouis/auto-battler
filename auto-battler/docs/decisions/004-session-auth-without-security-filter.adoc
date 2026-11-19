@@ -24,4 +24,5 @@ Hasher les mots de passe avec BCrypt et mémoriser le joueur dans la session HTT
 * L'inscription et la connexion fonctionnent sans configurer Spring Security.
 * Le message de connexion ne distingue pas un e-mail inconnu d'un mot de passe incorrect.
 * Les routes HTML et REST restent accessibles sans session. Rien dans la configuration n'exige d'être connecté pour appeler l'API ou ouvrir un formulaire.
-* `isAdmin` est stocké sur `Player`, sans contrôle d'accès associé dans le code parcouru.
+* `admin` est stocké sur `Player`, sans contrôle d'accès associé dans le code parcouru.
+* Le profil de progression est chargé avec le joueur placé en session.

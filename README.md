@@ -3,8 +3,8 @@
 Application web Spring Boot de gestion de ressources pour un jeu fantasy.
 Projet JEE, CY Tech, 2026.
 
-L'implémentation actuelle couvre l'inscription, la connexion, et la gestion des donjons, monstres, équipements et compétences.
-Une API REST expose le ping, les donjons, les monstres et les équipements.
+L'implémentation actuelle couvre l'inscription, la connexion, et la gestion des joueurs, donjons, monstres, équipements et compétences.
+Une API REST expose le ping, les joueurs, les donjons, les monstres et les équipements.
 Les entités de héros, d'équipes et de combats sont présentes ; le moteur de combat n'est pas implémenté.
 
 ## Technologies

@@ -1,0 +1,30 @@
+meta {
+  name: Update player
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/api/v1/players/{{playerId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "Ada",
+    "email": "ada@example.com",
+    "gold": 25,
+    "totalVictories": 2,
+    "totalDefeats": 1,
+    "admin": false
+  }
+}
+
+tests {
+  test("returns 200 and keeps the password out of the body", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.gold).to.equal(25);
+    expect(res.body.passwordHash).to.equal(undefined);
+  });
+}

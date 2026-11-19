@@ -16,6 +16,10 @@ class BattleLogEntry
 
 Player "1" --> "1" PlayerProfile : profile
 PlayerProfile "0..*" --> "0..1" Dungeon : highestDungeonReached
+
+note bottom of PlayerProfile
+  Same primary key as Player.
+end note
 Team "0..*" -- "0..*" Hero : heros
 Hero "0..*" -- "0..*" Equipment : equipments
 Hero "0..*" -- "0..*" Skill : skills

@@ -10,8 +10,8 @@ Ce guide décrit uniquement ce qui est implémenté dans le dépôt.
 == Périmètre actuel
 
 Un compte peut être créé et une session ouverte.
-Les pages Thymeleaf permettent de consulter et modifier des donjons, des monstres, des équipements et des compétences.
-L'API REST sous `/api/v1` couvre le ping, les donjons, les monstres et les équipements.
+Les pages Thymeleaf permettent de consulter et modifier des joueurs, des donjons, des monstres, des équipements et des compétences.
+L'API REST sous `/api/v1` couvre le ping, les joueurs, les donjons, les monstres et les équipements.
 
 Les entités `Hero`, `Team`, `Battle` et `BattleLogEntry` existent dans le modèle JPA, sans repository ni service.
 Le package `combat` ne contient pas de code.

@@ -1,0 +1,37 @@
+meta {
+  name: Create player
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/v1/players
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "Ada",
+    "email": "ada@example.com",
+    "password": "secret123",
+    "gold": 10,
+    "totalVictories": 1,
+    "totalDefeats": 0,
+    "admin": false
+  }
+}
+
+script:post-response {
+  bru.setVar("playerId", res.body.id);
+}
+
+tests {
+  test("returns 201 without the password", function () {
+    expect(res.status).to.equal(201);
+    expect(res.getHeader("location")).to.contain("/api/v1/players/");
+    expect(res.body.username).to.equal("Ada");
+    expect(res.body.password).to.equal(undefined);
+    expect(res.body.passwordHash).to.equal(undefined);
+  });
+}

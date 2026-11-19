@@ -4,11 +4,11 @@ LAYOUT_LEFT_RIGHT()
 skinparam shadowing false
 
 Container_Boundary(app, "Application Spring Boot") {
-  Component(mvc, "Contrôleurs MVC", "com.projet.auto_battler.controller", "Pages d'accueil, compte, donjons, monstres, équipements et compétences")
-  Component(rest, "Contrôleurs REST", "com.projet.auto_battler.rest", "ping, dungeons, monsters, equipment")
+  Component(mvc, "Contrôleurs MVC", "com.projet.auto_battler.controller", "Pages d'accueil, compte, joueurs, donjons, monstres, équipements et compétences")
+  Component(rest, "Contrôleurs REST", "com.projet.auto_battler.rest", "ping, players, dungeons, monsters, equipment")
   Component(webErrors, "WebExceptionHandler", "Spring MVC", "404 HTML pour ResourceNotFoundException, limité au package controller")
   Component(services, "Services", "com.projet.auto_battler.service", "Règles métier, transactions et mapping DTO")
-  Component(repos, "Repositories", "Spring Data JPA", "Player, PlayerProfile, Dungeon, Monster, Equipment, Skill")
+  Component(repos, "Repositories", "Spring Data JPA", "Player, Dungeon, Monster, Equipment, Skill")
   Component(views, "Vues Thymeleaf", "src/main/resources/templates", "Formulaires et pages serveur")
 }
 

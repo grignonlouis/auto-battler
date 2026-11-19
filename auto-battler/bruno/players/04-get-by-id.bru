@@ -1,0 +1,19 @@
+meta {
+  name: Get player by id
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/api/v1/players/{{playerId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("returns 200 with the player", function () {
+    expect(res.status).to.equal(200);
+    expect(res.body.id).to.equal(bru.getVar("playerId"));
+    expect(res.body.passwordHash).to.equal(undefined);
+  });
+}

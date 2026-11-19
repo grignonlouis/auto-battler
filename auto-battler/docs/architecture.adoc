@@ -9,12 +9,13 @@ Les services portent les règles métier, ouvrent les transactions et transforme
 Les repositories Spring Data JPA sont le seul accès à Hibernate.
 Il n'y a pas de scripts de migration : le schéma est celui des annotations JPA.
 
-Les pages Thymeleaf et l'API JSON partagent les services des donjons, monstres et équipements.
+Les pages Thymeleaf et l'API JSON partagent les services des joueurs, donjons, monstres et équipements.
 Les compétences n'ont qu'une interface HTML.
-Le compte (inscription, connexion, déconnexion) n'existe que côté pages.
+L'inscription, la connexion et la déconnexion n'existent que côté pages.
+`POST /api/v1/players` crée un joueur de gestion : il peut fixer la progression et `admin`, contrairement à l'inscription.
 
-`PlayerService` crée le compte, vérifie le mot de passe et ne produit pas de DTO REST.
-Le joueur connecté est stocké dans la session HTTP sous l'attribut `player`.
+`PlayerService` crée le compte, vérifie le mot de passe et expose le joueur en DTO, sans le hash.
+Le joueur connecté est stocké dans la session HTTP sous l'attribut `player` (l'entité).
 Aucun filtre d'authentification ne protège les routes.
 
 == Composants
@@ -43,9 +44,24 @@ Le mot de passe est stocké en hash BCrypt.
 
 plantuml::{diagramsdir}/login-sequence.puml[format=svg, alt="Séquence de connexion"]
 
-L'inscription suit le même stockage de session après `PlayerService.createUser`.
-La confirmation de mot de passe est vérifiée dans le service et lève `IllegalArgumentException` lorsque les deux saisies diffèrent.
-Aucun gestionnaire global ne transforme cette exception en page dédiée.
+L'inscription suit le même stockage de session après `PlayerService.register`.
+La confirmation de mot de passe est vérifiée dans le service et lève `BusinessRuleException` lorsque les deux saisies diffèrent.
+Le contrôleur réaffiche le formulaire avec l'erreur sur le champ `confirmPassword`.
+Un nom ou un e-mail déjà pris produit la même exception, sur `username` ou `email`.
+La connexion, elle, ne précise pas lequel des deux identifiants est faux.
+
+== Compte et progression
+
+`Player` porte l'identité du compte : nom d'utilisateur, e-mail, hash du mot de passe et drapeau `admin` (colonne `is_admin`).
+`PlayerProfile` porte la progression : victoires, défaites, or et donjon le plus haut atteint.
+Le profil n'a pas de clé propre. `@MapsId` réutilise l'identifiant du joueur, et l'association est en cascade avec `orphanRemoval`.
+Aucun repository n'enregistre un profil seul.
+L'inscription crée les deux lignes, avec une progression à zéro et `admin` à faux.
+Le formulaire et l'API de gestion peuvent ensuite modifier la progression et le drapeau.
+Le mot de passe n'est jamais recopié dans `PlayerResponse`. À la mise à jour, un mot de passe vide conserve le hash.
+
+Supprimer un donjon encore cité comme plus haut donjon atteint lève `BusinessRuleException`.
+Le contrôleur Thymeleaf des donjons renvoie ce message sur la liste.
 
 == Un boss par donjon
 
@@ -60,6 +76,8 @@ Le schéma est appliqué par Hibernate avec `ddl-auto=update`.
 Seules les associations réellement déclarées sur les entités sont dessinées.
 `Battle` et `BattleLogEntry` n'ont pas d'association JPA.
 `Player` n'est pas relié à `Team`.
+`PlayerProfile` utilise la même clé primaire que `Player` (`@MapsId`).
+Le donjon le plus haut atteint est un many-to-one facultatif.
 
 plantuml::{diagramsdir}/entities.puml[format=svg, alt="Relations JPA déclarées"]
 

@@ -10,11 +10,17 @@ Les listes de donjons et de monstres acceptent un paramètre de requête `search
 Les créations répondent 201 avec un en-tête `Location`.
 Un donjon peut associer ou dissocier un monstre (`PUT` / `DELETE` sur `/api/v1/dungeons/{id}/monsters/{monsterId}`).
 
+Les joueurs sont exposés sous `/api/v1/players`.
+La liste accepte `search` sur le nom d'utilisateur ou l'e-mail.
+Le corps d'écriture est `PlayerRequest` : le mot de passe est obligatoire à la création, facultatif à la mise à jour, et absent de `PlayerResponse`.
+`highestDungeonId` est facultatif.
+L'inscription publique n'est pas une route REST : `POST /api/v1/players` peut poser `admin` à vrai, comme les autres routes restent ouvertes sans session.
+
 Il n'existe pas de route REST pour les compétences, l'inscription ou la connexion.
 `SkillRestController` n'est pas un composant Spring.
 
 Les corps annotés `@Valid` sont contrôlés par Jakarta Validation.
-Les contraintes détaillées sont celles des DTO (`MonsterRequest`, `EquipmentRequest`, `DungeonRequest`) : le code reste la référence.
+Les contraintes détaillées sont celles des DTO (`PlayerRequest`, `MonsterRequest`, `EquipmentRequest`, `DungeonRequest`) : le code reste la référence.
 
 == Erreurs
 
