@@ -46,7 +46,7 @@
                     <a class="nav-link" th:href="@{/register}">Sign up</a>
                 </li>
                 <li class="nav-item" th:if="${session.player != null}">
-                    <span class="navbar-text" th:text="${session.player.username}">Player</span>
+                    <span class="nav-link" th:text="${session.player.username}">Player</span>
                 </li>
                 <li class="nav-item" th:if="${session.player != null}">
                     <a class="nav-link" th:href="@{/logout}">Log out</a>
