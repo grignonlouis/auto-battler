@@ -18,6 +18,7 @@ import com.projet.auto_battler.entity.MonsterType;
 import com.projet.auto_battler.exception.BusinessRuleException;
 import com.projet.auto_battler.exception.ResourceNotFoundException;
 import com.projet.auto_battler.repository.DungeonRepository;
+import com.projet.auto_battler.repository.PlayerRepository;
 import com.projet.auto_battler.service.dto.DungeonRequest;
 import com.projet.auto_battler.service.dto.DungeonResponse;
 import com.projet.auto_battler.service.dto.MonsterResponse;
@@ -28,10 +29,14 @@ public class DungeonService {
 
     private final DungeonRepository dungeonRepository;
     private final MonsterService monsterService;
+    private final PlayerRepository playerRepository;
 
-    public DungeonService(DungeonRepository dungeonRepository, MonsterService monsterService) {
+    public DungeonService(DungeonRepository dungeonRepository,
+                          MonsterService monsterService,
+                          PlayerRepository playerRepository) {
         this.dungeonRepository = dungeonRepository;
         this.monsterService = monsterService;
+        this.playerRepository = playerRepository;
     }
 
     @Transactional(readOnly = true)
@@ -86,8 +91,12 @@ public class DungeonService {
     }
 
     public void delete(Long id) {
-        // Monsters are kept. Refuse this once a battle can reference the dungeon.
+        // Monsters are kept. A profile that reached this dungeon blocks the delete.
         Dungeon dungeon = getEntityOrThrow(id);
+        if (playerRepository.existsByProfile_HighestDungeonReached_Id(id)) {
+            throw new BusinessRuleException(
+                    "This dungeon is a player's highest reached dungeon and cannot be deleted.");
+        }
         dungeonRepository.delete(dungeon);
     }
 

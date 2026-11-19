@@ -13,6 +13,7 @@
     </div>
 
     <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+    <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
 
     <form class="row g-2 mb-4" method="get" th:action="@{/dungeons}">
         <div class="col">

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head th:replace="~{fragments/layout :: head(${pageTitle})}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container py-4" style="max-width: 700px;">
+
+    <h1 class="mb-4" th:text="${pageTitle}">Title</h1>
+
+    <form method="post" th:action="@{${formAction}}" th:object="${playerRequest}">
+
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" th:field="*{username}"
+                   th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" th:field="*{email}"
+                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" th:field="*{password}" autocomplete="new-password"
+                   th:required="${!editing}"
+                   th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+            <div class="form-text" th:if="${editing}">Leave blank to keep the current password.</div>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+        </div>
+
+        <div class="form-check mb-4">
+            <input type="checkbox" class="form-check-input" th:field="*{admin}">
+            <label class="form-check-label" th:for="${#ids.prev('admin')}">Administrator</label>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('admin')}" th:errors="*{admin}"></div>
+        </div>
+
+        <h2 class="h5">Progression</h2>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="gold" class="form-label">Gold</label>
+                <input type="number" min="0" class="form-control" th:field="*{gold}"
+                       th:classappend="${#fields.hasErrors('gold')} ? 'is-invalid'">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('gold')}" th:errors="*{gold}"></div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="totalVictories" class="form-label">Victories</label>
+                <input type="number" min="0" class="form-control" th:field="*{totalVictories}"
+                       th:classappend="${#fields.hasErrors('totalVictories')} ? 'is-invalid'">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('totalVictories')}" th:errors="*{totalVictories}"></div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="totalDefeats" class="form-label">Defeats</label>
+                <input type="number" min="0" class="form-control" th:field="*{totalDefeats}"
+                       th:classappend="${#fields.hasErrors('totalDefeats')} ? 'is-invalid'">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('totalDefeats')}" th:errors="*{totalDefeats}"></div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="highestDungeonId" class="form-label">Highest dungeon reached</label>
+            <select class="form-select" th:field="*{highestDungeonId}">
+                <option value="">None</option>
+                <option th:each="dungeon : ${allDungeons}" th:value="${dungeon.id}" th:text="${dungeon.name}">Crypt</option>
+            </select>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-outline-secondary" th:href="@{/players}">Cancel</a>
+        </div>
+    </form>
+</main>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

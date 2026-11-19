@@ -24,6 +24,7 @@ import com.projet.auto_battler.entity.MonsterType;
 import com.projet.auto_battler.exception.BusinessRuleException;
 import com.projet.auto_battler.exception.ResourceNotFoundException;
 import com.projet.auto_battler.repository.DungeonRepository;
+import com.projet.auto_battler.repository.PlayerRepository;
 import com.projet.auto_battler.service.dto.DungeonRequest;
 import com.projet.auto_battler.service.dto.DungeonResponse;
 
@@ -35,6 +36,9 @@ class DungeonServiceTest {
 
     @Mock
     private MonsterService monsterService;
+
+    @Mock
+    private PlayerRepository playerRepository;
 
     @InjectMocks
     private DungeonService dungeonService;
@@ -189,6 +193,28 @@ class DungeonServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> dungeonService.delete(99L));
 
         verify(dungeonRepository, never()).delete(any());
+    }
+
+    @Test
+    void deleteFailsWhenAPlayerReachedTheDungeon() {
+        when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon(1L, "Crypt")));
+        when(playerRepository.existsByProfile_HighestDungeonReached_Id(1L)).thenReturn(true);
+
+        BusinessRuleException exception =
+                assertThrows(BusinessRuleException.class, () -> dungeonService.delete(1L));
+
+        assertThat(exception.getMessage()).contains("highest");
+        verify(dungeonRepository, never()).delete(any());
+    }
+
+    @Test
+    void deleteRemovesDungeonWhenNoPlayerReachedIt() {
+        when(dungeonRepository.findById(1L)).thenReturn(Optional.of(dungeon(1L, "Crypt")));
+        when(playerRepository.existsByProfile_HighestDungeonReached_Id(1L)).thenReturn(false);
+
+        dungeonService.delete(1L);
+
+        verify(dungeonRepository).delete(any(Dungeon.class));
     }
 
     @Test

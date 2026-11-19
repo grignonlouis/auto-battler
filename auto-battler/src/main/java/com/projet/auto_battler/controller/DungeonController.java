@@ -94,7 +94,12 @@ public class DungeonController {
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes redirect) {
-        dungeonService.delete(id);
+        try {
+            dungeonService.delete(id);
+        } catch (BusinessRuleException e) {
+            redirect.addFlashAttribute("error", e.getMessage());
+            return "redirect:/dungeons";
+        }
         redirect.addFlashAttribute("success", "Dungeon deleted.");
         return "redirect:/dungeons";
     }

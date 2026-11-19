@@ -28,6 +28,7 @@
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/players}">Players</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/heroes}">Heroes</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/teams}">Teams</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/skills}">Skills</a></li>
@@ -43,6 +44,9 @@
                 </li>
                 <li class="nav-item" th:if="${session.player == null}">
                     <a class="nav-link" th:href="@{/register}">Sign up</a>
+                </li>
+                <li class="nav-item" th:if="${session.player != null}">
+                    <span class="navbar-text" th:text="${session.player.username}">Player</span>
                 </li>
                 <li class="nav-item" th:if="${session.player != null}">
                     <a class="nav-link" th:href="@{/logout}">Log out</a>
