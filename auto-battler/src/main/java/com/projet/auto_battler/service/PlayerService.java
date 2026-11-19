@@ -41,7 +41,9 @@ public class PlayerService {
     @Transactional(readOnly = true)
     public List<PlayerResponse> findAll(String search) {
         Sort sort = Sort.by("username");
+
         List<Player> players;
+
         if (search == null || search.isBlank()) {
             players = playerRepository.findAll(sort);
         } else {
@@ -49,7 +51,12 @@ public class PlayerService {
             players = playerRepository.findByUsernameContainingIgnoreCaseOrEmailContainingIgnoreCase(
                     term, term, sort);
         }
-        return players.stream().map(PlayerResponse::from).toList();
+
+        return players.stream()
+                .map(PlayerResponse::from)
+                .sorted((p1, p2) ->
+                        Double.compare(p2.getWinrate(), p1.getWinrate()))
+                .toList();
     }
 
     @Transactional(readOnly = true)

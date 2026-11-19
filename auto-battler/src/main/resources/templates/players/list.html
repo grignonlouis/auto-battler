@@ -8,8 +8,7 @@
 <main class="container py-4">
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Players</h1>
-        <a class="btn btn-primary" th:href="@{/players/new}">New player</a>
+        <h1 class="mb-0">Players Ranking</h1>
     </div>
 
     <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
@@ -28,19 +27,15 @@
         <thead>
         <tr>
             <th>Username</th>
-            <th>Email</th>
             <th>Gold</th>
             <th>W / L</th>
             <th>Highest dungeon</th>
-            <th>Role</th>
-            <th class="text-end">Actions</th>
         </tr>
         </thead>
         <tbody>
 
         <tr th:each="player : ${players}">
             <td th:text="${player.username}">Name</td>
-            <td th:text="${player.email}">email</td>
             <td th:text="${player.gold}">0</td>
             <td>
                 <span th:text="${player.totalVictories}">0</span>
@@ -50,15 +45,6 @@
             <td th:text="${player.highestDungeonName != null ? player.highestDungeonName : '—'}">—</td>
             <td>
                 <span class="badge text-bg-secondary" th:if="${player.admin}">Admin</span>
-            </td>
-            <td class="text-end">
-                <a class="btn btn-sm btn-outline-primary"
-                   th:href="@{/players/{id}/edit(id=${player.id})}">Edit</a>
-                <form class="d-inline" method="post"
-                      th:action="@{/players/{id}/delete(id=${player.id})}"
-                      onsubmit="return confirm('Delete this player?');">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                </form>
             </td>
         </tr>
 

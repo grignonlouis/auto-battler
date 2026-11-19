@@ -37,4 +37,5 @@ public class PlayerProfile {
     @ManyToOne
     @JoinColumn(name = "highest_dungeon_reached_id")
     private Dungeon highestDungeonReached;
+
 }

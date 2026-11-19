@@ -29,4 +29,13 @@ public record PlayerResponse(
                 dungeon == null ? null : dungeon.getId(),
                 dungeon == null ? null : dungeon.getName());
     }
+    public double getWinrate() {
+        int totalGames = totalVictories + totalDefeats;
+
+        if (totalGames == 0) {
+            return 0.0;
+        }
+
+        return (double) totalVictories / totalGames * 100;
+    }
 }
